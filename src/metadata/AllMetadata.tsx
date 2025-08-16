@@ -20,8 +20,8 @@ export const AllMetadata = (
       type: "website",
       images: [
         {
-          url: `/assets/zingeber_meta_tag.png`,
-          alt: "Zingeber",
+          url: `/assets/arkglobalworldwide.png`,
+          alt: "arkglobalworldwide",
           width: 800,
           height: 600,
         },
@@ -31,19 +31,19 @@ export const AllMetadata = (
       language: "English",
       MobileOptimized: "320",
       HandheldFriendly: "True",
-      copyright: "Zingeber",
+      copyright: "arkglobalworldwide",
       "X-UA-Compatible": "IE=edge",
       "mobile-web-app-capable": "yes",
       "Content-Type": "text/html; charset=utf-8",
       robots: "index, follow",
       "revisit-after": "7 days",
-      author: "Zingeber",
+      author: "arkglobalworldwide",
       viewport:
         "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no",
       "theme-color": "#353535",
     },
     alternates: {
-      canonical: "https://zb.devcri.com/",
+      canonical: "https://arkglobalworldwide.com/",
     },
     ...customMetadata, // Merge custom values if provided
   };
