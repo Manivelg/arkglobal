@@ -1,0 +1,158 @@
+@use "../variables/variables" as *;
+
+.footer_section {
+  padding: 50px 0 35px;
+  background-color: $footerColor;
+
+  .footer_list {
+    line-height: 210%;
+  }
+
+  .copy_section {
+    border-top: 1px solid #484848;
+    padding-top: 30px;
+    cursor: default;
+    color: $whiteColor;
+  }
+
+  .footerOne {
+    min-height: 200px;
+    .footerHeader {
+      padding-bottom: 15px;
+
+      .footHead {
+        position: relative;
+        font-size: 1.2rem;
+        font-weight: 500;
+        color: $whiteColor;
+        line-height: 200%;
+        cursor: default;
+
+        &::before,
+        &::after {
+          content: "";
+          display: block;
+          position: relative;
+          left: 0;
+          width: 50px;
+          max-width: 4rem;
+          height: 2px;
+          transform-origin: left;
+          will-change: transform;
+          border-radius: 20px;
+        }
+
+        &::before {
+          top: 42px;
+          background-color: $secondaryColor;
+          transform: scaleX(0);
+          transition: transform 0.75s cubic-bezier(0.57, 0, 0, 1);
+          z-index: 2;
+        }
+
+        &::after {
+          top: 2px;
+          background-color: $whiteColor;
+          opacity: 0.25;
+          transform: scaleX(1);
+          transition: transform 0.75s ease;
+        }
+      }
+    }
+
+    &:hover .footHead {
+      &::before {
+        transform: scaleX(0.99);
+        transition-delay: 0.3s;
+      }
+
+      &::after {
+        transform: scaleX(0.99);
+        transition-delay: 0.1s;
+      }
+    }
+  }
+}
+
+.footerLogo {
+  .footer_logo {
+    object-fit: cover;
+  }
+}
+.p-tooltip .p-tooltip-text {
+  border-radius: 30px;
+  padding: 8px 20px;
+}
+.contact_img {
+  justify-content: start;
+  align-items: center;
+  padding-bottom: 5px;
+  .contacts {
+    width: 28px;
+  }
+}
+
+.scrollTop {
+  background-image: linear-gradient(
+    183deg,
+    $secondaryColor 0%,
+    $thirdColor 100%
+  );
+  padding: 20px;
+  cursor: pointer;
+  &:hover {
+    background-image: linear-gradient(
+      183deg,
+      $thirdColor 0%,
+      $secondaryColor 100%
+    );
+  }
+  .up_chevron {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -8px;
+    margin-top: -13px;
+    height: 0;
+    width: 0;
+    border: 8px solid transparent;
+    border-bottom-color: #fff;
+  }
+}
+
+.servicePage {
+  overflow-y: scroll;
+}
+
+// Responsive
+@media (max-width: 500px) {
+  .mobile_view {
+    font-size: 0.875rem;
+
+    .mobile_space {
+      display: block;
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .footer_section {
+    .footerLogo {
+      min-height: 100px;
+    }
+    .footerOne {
+      min-height: 140px;
+      .footerHeader {
+        .footHead {
+          font-size: 1rem;
+          &::before {
+            top: 36px;
+          }
+        }
+      }
+      .footer_list {
+        font-size: 0.9rem;
+      }
+    }
+  }
+}

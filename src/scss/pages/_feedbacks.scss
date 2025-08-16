@@ -1,0 +1,278 @@
+@use "../mixins/mixin" as *;
+
+.feedback {
+  padding: 50px 0;
+  .feedbackHeader {
+    text-align: center;
+    .feedbackHead {
+      @include Heading;
+    }
+    .feedbackPara {
+      max-width: 800px;
+      margin: 0 auto;
+      font-size: 1.2rem;
+      line-height: 170%;
+      cursor: default;
+    }
+  }
+
+  .ourFeedback {
+    padding: 50px 0 0;
+    position: relative;
+    .feedCard {
+      padding: 0px 30px 0px 30px;
+      box-shadow: 0px 3px 30px #dfdfdf;
+      .feedHead {
+        display: flex;
+        align-items: start;
+        justify-content: center;
+        flex-direction: column;
+        height: 100%;
+        gap: 30px;
+        width: 90%;
+
+        .feedPara {
+          font-size: 1.2rem;
+          position: relative;
+          left: 30px;
+          .feedbackQuote {
+            position: absolute;
+            left: -30px;
+            bottom: 55px;
+            color: #d5d5d5;
+            z-index: -1;
+            .feedQuote {
+              position: relative;
+              font-size: 10rem;
+              font-family: "sans-serif";
+            }
+          }
+        }
+      }
+      .feedName {
+        font-weight: 500;
+        font-size: 1.3rem;
+      }
+      .feedDesignation {
+        font-size: 0.9rem;
+        color: #797979;
+      }
+    }
+    .clients_feedback {
+      .swiper {
+        min-height: 470px;
+        .swiper-wrapper {
+          margin-top: 40px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 1440px) {
+  .feedback {
+    .ourFeedback {
+      .feedCard {
+        .feedHead {
+          .feedPara {
+            font-size: 1rem;
+            line-height: 150%;
+            .feedbackQuote {
+              bottom: 45px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .feedback {
+    .ourFeedback {
+      .feedCard {
+        .feedHead {
+          width: 100%;
+          .feedPara {
+            font-size: 0.9rem;
+            line-height: 150%;
+            .feedbackQuote {
+              bottom: 35px;
+              .feedQuote {
+                font-size: 7rem;
+              }
+            }
+          }
+        }
+        .feedName {
+          font-size: 1.1rem;
+        }
+        .feedDesignation {
+          font-size: 0.9rem;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  .feedback {
+    .ourFeedback {
+      .feedCard {
+        .feedHead {
+          .feedPara {
+            left: 25px;
+            .feedbackQuote {
+              bottom: 0px;
+              top: -20px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .feedback {
+    .feedbackHeader {
+      .feedbackHead {
+        font-size: 2rem;
+      }
+    }
+    .ourFeedback {
+      .feedCard {
+        padding: 0 15px;
+        .feedHead {
+          gap: 10px;
+          .feedPara {
+            left: 25px;
+            .feedbackQuote {
+              bottom: 0px;
+              top: -20px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .feedback {
+    .ourFeedback {
+      .feedCard {
+        padding: 35px 0 0 25px;
+        .feedHead {
+          gap: 15px;
+          .feedPara {
+            left: 0px;
+            text-indent: 30px;
+            padding-right: 25px;
+            .feedbackQuote {
+              position: absolute;
+              left: 0px;
+              bottom: 0;
+            }
+          }
+        }
+      }
+      .clients_feedback {
+        .feedPic {
+          width: 65%;
+          margin: 0px auto;
+        }
+        .swiper {
+          min-height: 580px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .feedback {
+    .feedbackHeader {
+      .feedbackHead {
+        font-size: 1.5rem;
+        line-height: 130%;
+        padding-bottom: 20px;
+        .feedback_block {
+          display: block;
+        }
+      }
+      .feedbackPara {
+        font-size: 0.9rem;
+      }
+    }
+    .ourFeedback {
+      .feedCard {
+        padding: 35px 0 0 25px;
+        .feedHead {
+          gap: 15px;
+        }
+      }
+      .clients_feedback {
+        .feedPic {
+          width: 75%;
+          margin: 0px auto;
+        }
+        .swiper {
+          min-height: 590px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .feedback {
+    padding: 50px 0 0;
+    .hide_shadow {
+      display: none;
+    }
+    .ourFeedback {
+      .feedCard {
+        .feedHead {
+          gap: 0px;
+          .feedPara {
+            min-height: 120px;
+          }
+        }
+      }
+      .clients_feedback {
+        .feedPic {
+          width: 75%;
+          margin: 0px auto;
+        }
+        .swiper {
+          min-height: 600px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 360px) {
+  .feedback {
+    .ourFeedback {
+      .feedCard {
+        .feedHead {
+          .feedPara {
+            min-height: 145px;
+          }
+        }
+      }
+
+      .clients_feedback {
+        .feedPic {
+          width: 85%;
+          margin: 0px auto;
+        }
+        .swiper {
+          min-height: 580px;
+        }
+      }
+    }
+  }
+}

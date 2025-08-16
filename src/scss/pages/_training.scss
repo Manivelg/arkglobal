@@ -1,0 +1,66 @@
+@use "../variables/variables" as *;
+@use "../mixins/mixin" as *;
+
+.training {
+  padding: 50px 0;
+  overflow: hidden;
+  background-image: url("/assets/banner/content.webp");
+  background-size: 100%;
+  background-repeat: no-repeat;
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(0deg, rgb(0, 0, 0, 0.5), transparent 100%);
+    bottom: 0;
+  }
+  .content_head {
+    @include flexCenter;
+    flex-direction: column;
+    height: 100%;
+    width: 80%;
+    margin: 0px auto;
+    z-index: 1;
+    position: relative;
+    .content_header {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: $whiteColor;
+      text-shadow: 1px 1px 5px $blackColor;
+      text-align: center;
+      padding-bottom: 10px;
+      z-index: 1;
+      position: relative;
+    }
+    .content_para {
+      font-size: 1rem;
+      color: $whiteColor;
+      text-shadow: 1px 1px 5px $blackColor;
+      text-align: center;
+    }
+  }
+
+  .contentGrow {
+    position: relative;
+    z-index: 1;
+    animation: marqueeVertical 20s linear infinite;
+    height: 540px;
+
+    will-change: transform;
+    .contentHead {
+      background-color: $whiteColor;
+      margin: 30px 0;
+      padding: 10px;
+    }
+  }
+  @keyframes marqueeVertical {
+    0% {
+      transform: translateY(100%);
+    }
+    100% {
+      transform: translateY(-100%);
+    }
+  }
+}

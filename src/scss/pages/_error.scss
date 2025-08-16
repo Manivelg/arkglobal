@@ -1,0 +1,85 @@
+@use "../variables/variables" as *;
+
+.not_found {
+  .found_head {
+    display: grid;
+    place-items: center;
+    .top_move {
+      text-align: center;
+      .not_found_header {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+      }
+    }
+  }
+}
+
+.submit_button {
+  background-color: transparent;
+  color: $headColor;
+  outline: none;
+  border: 2px solid $headColor;
+  cursor: pointer;
+  padding: 9px 20px 9.5px;
+  border-radius: 50px;
+
+  &:hover {
+    background-color: $headColor;
+    color: $whiteColor;
+    outline: none;
+  }
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+}
+
+.submit_button.padd_set {
+  padding: 9px 50px 9.5px;
+}
+
+.contact_button {
+  background-image: linear-gradient(183deg, #face00 0%, #f4a100 100%);
+  color: $whiteColor;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  padding: 12px 40px 14px;
+  border-radius: 50px;
+  box-shadow: 1px 1px 15px #cacaca;
+  min-width: 200px;
+  letter-spacing: 1px;
+
+  &:hover {
+    background-image: linear-gradient(0deg, #f4a100 30%, #face00 100%);
+    color: $whiteColor;
+    outline: none;
+  }
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+}
+
+.contacts_button {
+  background-image: linear-gradient(183deg, #408fc4 0%, #112735 100%);
+  color: $whiteColor;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  padding: 12px 40px 13px;
+  border-radius: 50px;
+  box-shadow: 1px 1px 15px #b1b1b1;
+  letter-spacing: 1px;
+  min-width: 200px;
+
+  &:hover {
+    background-image: linear-gradient(183deg, #408fc4 0%, #0e1b22 100%);
+    color: $whiteColor;
+    outline: none;
+  }
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+}

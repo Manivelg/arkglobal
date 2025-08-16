@@ -1,0 +1,173 @@
+@use "../mixins/mixin" as *;
+@use "../variables/variables" as *;
+
+.mission {
+  padding: 100px 0 50px;
+  .missionHeader {
+    text-align: center;
+    min-height: 230px;
+    .missionHead {
+      @include Heading;
+    }
+    .missionAbout {
+      font-size: 1.3rem;
+      line-height: 200%;
+      font-weight: 500;
+    }
+    .missionPara {
+      max-width: 800px;
+      margin: 0px auto;
+      font-size: 1.2rem;
+      line-height: 170%;
+      cursor: default;
+      .oneStop {
+        font-weight: 600;
+      }
+    }
+  }
+  .missionGoal {
+    gap: 40px;
+    .goalContent {
+      position: relative;
+      padding: 0 25px;
+      border: 1px solid $darkborder;
+      min-height: 230px;
+      @include center_flex;
+      transition: transform 0.3s ease;
+      cursor: default;
+      &:hover {
+        box-shadow: 1px 1px 25px $borderColor;
+        border: 1px solid $borderColor;
+        transform: translateY(-10px);
+        transition: transform 0.3s ease;
+      }
+      .goalIcon {
+        position: absolute;
+        top: -30px;
+        &::after {
+          content: "";
+          position: absolute;
+          width: 0;
+          height: 0;
+          border: 0 solid transparent;
+          border-right-width: 0;
+          border-left-width: 10px;
+          border-bottom: 10px solid #fff;
+          left: 50px;
+          top: 51px;
+        }
+        .goalImage {
+          width: 60px;
+          background-image: linear-gradient(183deg, #face00 0%, #f4a100 100%);
+          position: relative;
+        }
+      }
+      .goalHeader {
+        font-size: 1.2rem;
+        font-weight: 500;
+        padding: 30px 0 10px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 1440px) {
+  .mission .missionGoal .goalContent {
+    min-height: 300px;
+  }
+}
+
+@media only screen and (max-width: 1279px) {
+  .mission {
+    .missionGoal {
+      .goalContent {
+        min-height: 330px;
+        gap: 0px;
+      }
+    }
+  }
+  .mission {
+    .missionGoal {
+      .goalContentheight_set {
+        min-height: 330px;
+        margin-bottom: 30px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  .mission {
+    .missionGoal {
+      .goalContent {
+        min-height: 300px;
+        gap: 0px;
+      }
+    }
+  }
+  .mission {
+    .missionGoal {
+      .goalContent.height_set {
+        min-height: 250px;
+        margin-bottom: 30px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .mission {
+    .missionGoal {
+      gap: 40px;
+    }
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .mission {
+    .missionGoal {
+      gap: 10px;
+      .goalContent {
+        margin: 30px 0;
+        min-height: 200px;
+      }
+    }
+  }
+  .mission {
+    .missionGoal {
+      .goalContent.height_set {
+        margin: 30px 0;
+        min-height: 200px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .mission {
+    padding: 30px 0;
+    .missionHeader {
+      min-height: 180px;
+      .missionHead {
+        font-size: 1.5rem;
+        min-height: 180%;
+      }
+      .missionPara {
+        font-size: 0.9rem;
+      }
+    }
+    .missionGoal {
+      .goalContent {
+        padding: 20px;
+        .goalHeader {
+          font-size: 1.1rem;
+          padding: 30px 0 10px;
+          line-height: 130%;
+        }
+        .goalPara {
+          font-size: 0.875rem;
+        }
+      }
+    }
+  }
+}

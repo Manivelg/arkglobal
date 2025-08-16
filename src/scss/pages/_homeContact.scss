@@ -1,0 +1,50 @@
+@use "../variables/variables" as *;
+@use "../mixins/mixin" as *;
+
+.homeContact {
+  padding: 50px 0;
+  background-image: linear-gradient(60deg, #face00 0%, #f4a100 100%);
+  .contactHead {
+    .ContactHeader {
+      font-size: 2rem;
+      font-family: "montserrat";
+      font-weight: 600;
+      line-height: 140%;
+      width: 95%;
+      margin: 0px auto;
+    }
+  }
+  .contactButton {
+    @include flexCenter;
+    height: 100%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .homeContact {
+    .contactHead {
+      padding-bottom: 25px;
+      .ContactHeader {
+        text-align: center;
+        font-size: 1.5rem;
+      }
+    }
+    .contactButton {
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .homeContact {
+    .contactHead {
+      padding-bottom: 15px;
+      .ContactHeader {
+        text-align: center;
+        font-size: 1.2rem;
+        line-height: 140%;
+      }
+    }
+    .contactButton {
+    }
+  }
+}

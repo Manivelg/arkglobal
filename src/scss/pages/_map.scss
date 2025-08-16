@@ -1,0 +1,294 @@
+@use "../variables/variables" as *;
+@use "../mixins/mixin" as *;
+
+.map {
+  padding: 100px 0 50px;
+  .mapHead {
+    text-align: center;
+    .mapHeader {
+      font-size: 3.5rem;
+      font-weight: 700;
+      line-height: 140%;
+      padding-bottom: 15px;
+      font-family: "montserrat";
+      .banner_yellow {
+        background-image: url("/assets/banner/bottom_line.svg");
+        background-repeat: no-repeat;
+        background-position: bottom;
+        background-size: 100%;
+        padding-bottom: 10px;
+      }
+    }
+    .mapPara {
+      font-size: 1.1rem;
+      @include flexCenter;
+      min-height: 40px;
+      .faster {
+        font-weight: 600;
+        font-size: 1.4rem;
+        width: 50px;
+      }
+    }
+  }
+}
+
+.maps {
+  background-image: url("/assets/contact-us/map/bg.webp");
+  background-repeat: repeat;
+  background-size: contain;
+  .mapImg {
+    width: 100%;
+  }
+}
+
+// Contact us
+.groupSection {
+  padding: 0px 0 20px;
+}
+.address {
+  padding: 50px 0;
+  .addressSet {
+    padding: 20px;
+    border: 1px solid #bababa;
+    border-radius: 10px;
+    .addContact {
+      font-size: 1.5rem;
+      font-weight: 700;
+      line-height: 30px;
+      padding: 5px 0 25px;
+    }
+    .contactList {
+      background-color: #f9f9f9;
+      padding: 10px 10px 15px;
+      border: 1px solid #eaeaea;
+      border-radius: 10px;
+      .country {
+        font-size: 1.3rem;
+        text-transform: uppercase;
+        font-weight: 600;
+        color: $primaryColor;
+        line-height: 200%;
+        padding-bottom: 10px;
+        letter-spacing: 1px;
+      }
+    }
+
+    .connect {
+      display: flex;
+      align-items: center;
+      padding: 10px 10px 13px;
+      background-color: $whiteColor;
+      border: 1px solid #eaeaea;
+      border-radius: 10px;
+      min-height: 100px;
+      .phoneOwner {
+        font-size: 1.1rem;
+        line-height: 150%;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        padding-bottom: 10px;
+        margin-left: 10px;
+      }
+      .phoneOne {
+        font-weight: 600;
+        font-size: 1rem;
+        line-height: 150%;
+      }
+      .mailOne {
+        font-weight: 400;
+        font-size: 1rem;
+        line-height: 150%;
+      }
+    }
+  }
+}
+
+// Message Address
+.message {
+  padding: 100px 0 50px;
+  .messageHeader {
+    text-align: center;
+    .messageHead {
+      font-size: 2.5rem;
+      line-height: 200%;
+      font-weight: 700;
+      color: #1b4f72;
+      font-family: montserrat;
+    }
+    .messagePara {
+      max-width: 800px;
+      margin: 0 auto;
+      font-size: 1.2rem;
+      line-height: 170%;
+      cursor: default;
+    }
+  }
+
+  .chat {
+    padding: 50px 0;
+    .contact {
+      .height_set {
+        padding-bottom: 30px;
+        align-items: center;
+      }
+      .center_height {
+        min-height: 180px;
+        align-items: center;
+      }
+      .contactHeader {
+        font-size: 1.1rem;
+        line-height: 200%;
+        font-weight: 600;
+        text-transform: uppercase;
+        text-align: left;
+        min-height: 60px;
+      }
+      .allContacts {
+        min-height: 150px;
+      }
+      .contactOnly {
+        min-height: 120px;
+      }
+      .contactList {
+        background-color: #f4f7fa;
+        padding: 15px;
+        border: 1px solid #c5e2ff;
+        border-radius: 10px;
+        @include center_flex;
+        justify-content: space-between;
+        transition: box-shadow 0.3s ease, transform 0.3s ease;
+        &:hover {
+          box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+          transform: translateY(-5px);
+        }
+        .contactHead {
+          font-size: 1.3rem;
+          line-height: 150%;
+          font-weight: 500;
+          letter-spacing: 0.2px;
+        }
+        .contactChat {
+          font-size: 1.1rem;
+          line-height: 150%;
+          font-weight: 600;
+          color: #1b4f72;
+        }
+        .contactMail {
+          font-size: 1rem;
+          line-height: 150%;
+          font-weight: 400;
+          letter-spacing: 0.2px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .map {
+    .mapHead {
+      .mapHeader {
+        font-size: 2.1rem;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .map {
+    .mapHead {
+      .mapPara {
+        display: block;
+        width: 80%;
+        margin: 0px auto;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .map {
+    .mapHead {
+      .mapHeader {
+        font-size: 1.8rem;
+        .banner_yellow {
+          padding-bottom: 5px;
+        }
+      }
+    }
+  }
+  .message {
+    .messageHeader {
+      min-height: 50px;
+      .messageHead {
+        font-size: 1.5rem;
+      }
+      .messagePara {
+        font-size: 0.9rem;
+        .message_block {
+          display: block;
+        }
+      }
+    }
+    .chat {
+      padding: 50px 0;
+      .contact {
+        .contactHeader {
+          min-height: 50px;
+          font-size: 1.1rem;
+          text-align: center;
+        }
+        .height_set {
+          padding-bottom: 10px;
+        }
+        .height_set1 {
+          padding-bottom: 0px;
+        }
+        .contactList {
+          justify-content: space-between;
+          .contactHead {
+            font-size: 1rem;
+          }
+          .contactChat {
+            font-size: 0.9rem;
+          }
+          .contactMail {
+            font-size: 0.9rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .map {
+    .mapHead {
+      .mapHeader {
+        font-size: 1.5rem;
+      }
+      .mapPara {
+        font-size: 0.9rem;
+        .faster {
+          font-size: 1.2rem;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 360px) {
+  .map {
+    .mapHead {
+      .mapHeader {
+        font-size: 1.3rem;
+      }
+      .mapPara {
+        font-size: 0.9rem;
+        .faster {
+          font-size: 1.2rem;
+        }
+      }
+    }
+  }
+}

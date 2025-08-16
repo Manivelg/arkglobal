@@ -1,0 +1,160 @@
+const ClientLists = [
+  {
+    id: 1,
+    status: "active",
+    data: [
+      {
+        id: 1,
+        clientName: "ANGLO EASTERN",
+        clientImg: "/assets/home/clients/1.webp",
+        link: "/",
+      },
+      {
+        id: 2,
+        clientName: "DELTA TANKERS",
+        clientImg: "/assets/home/clients/2.webp",
+        link: "/",
+      },
+      {
+        id: 3,
+        clientName: "AVIN INTERNATIONAL",
+        clientImg: "/assets/home/clients/3.webp",
+        link: "/",
+      },
+      {
+        id: 4,
+        clientName: "GREAT EASTERN",
+        clientImg: "/assets/home/clients/8.webp",
+        link: "/",
+      },
+      {
+        id: 5,
+        clientName: "BSM",
+        clientImg: "/assets/home/clients/5.webp",
+        link: "/",
+      },
+      {
+        id: 6,
+        clientName: "TORM",
+        clientImg: "/assets/home/clients/6.webp",
+        link: "/",
+      },
+      {
+        id: 7,
+        clientName: "WALLEM",
+        clientImg: "/assets/home/clients/7.webp",
+        link: "/",
+      },
+      {
+        id: 8,
+        clientName: "DYNACOM",
+        clientImg: "/assets/home/clients/4.webp",
+        link: "/",
+      },
+      {
+        id: 9,
+        clientName: "OSM THOME",
+        clientImg: "/assets/home/clients/9.webp",
+        link: "/",
+      },
+      {
+        id: 10,
+        clientName: "NOMIKOS",
+        clientImg: "/assets/home/clients/10.webp",
+        link: "/",
+      },
+      {
+        id: 11,
+        clientName: "EMPIRE NAVIGATION",
+        clientImg: "/assets/home/clients/11.webp",
+        link: "/",
+      },
+      // {
+      //   id: 12,
+      //   clientName: "",
+      //   clientImg: "",
+      //   link: "/",
+      // },
+      // {
+      //   id: 13,
+      //   clientName: "",
+      //   clientImg: "",
+      //   link: "/",
+      // },
+      // {
+      //   id: 14,
+      //   clientName: "",
+      //   clientImg: "",
+      //   link: "/",
+      // },
+      // {
+      //   id: 15,
+      //   clientName: "",
+      //   clientImg: "",
+      //   link: "/",
+      // },
+      // {
+      //   id: 16,
+      //   clientName: "",
+      //   clientImg: "",
+      //   link: "/",
+      // },
+      // {
+      //   id: 17,
+      //   clientName: "",
+      //   clientImg: "",
+      //   link: "/",
+      // },
+      // {
+      //   id: 18,
+      //   clientName: "",
+      //   clientImg: "",
+      //   link: "/",
+      // },
+      // {
+      //   id: 19,
+      //   clientName: "",
+      //   clientImg: "",
+      //   link: "/",
+      // },
+      // {
+      //   id: 20,
+      //   clientName: "",
+      //   clientImg: "",
+      //   link: "/",
+      // },
+      // {
+      //   id: 21,
+      //   clientName: "",
+      //   clientImg: "",
+      //   link: "/",
+      // },
+      // {
+      //   id: 22,
+      //   clientName: "",
+      //   clientImg: "",
+      //   link: "/",
+      // },
+      // {
+      //   id: 23,
+      //   clientName: "",
+      //   clientImg: "",
+      //   link: "/",
+      // },
+      // {
+      //   id: 24,
+      //   clientName: "",
+      //   clientImg: "",
+      //   link: "/",
+      // },
+      // {
+      //   id: 25,
+      //   clientName: "",
+      //   clientImg: "",
+      //   link: "/",
+      // },
+    ],
+  },
+];
+
+export { ClientLists };

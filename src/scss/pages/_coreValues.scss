@@ -1,0 +1,149 @@
+@use "../variables/variables" as *;
+@use "../mixins/mixin" as *;
+
+.coreValues {
+  padding: 100px 0 50px;
+  .coreHeader {
+    text-align: center;
+    .coreHead {
+      font-size: 2.5rem;
+      line-height: 200%;
+      font-weight: 700;
+      color: #1b4f72;
+      font-family: montserrat;
+    }
+    .corePara {
+      max-width: 800px;
+      margin: 0 auto;
+      font-size: 1.2rem;
+      line-height: 170%;
+      cursor: default;
+    }
+  }
+
+  .coreLists {
+    padding: 20px 0;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    align-content: space-around;
+    .ourValues {
+      width: 100px;
+      flex: 0 1 27%;
+      text-align: left;
+      padding: 30px 0;
+      .coreImg {
+        .ourpic {
+          width: 85px;
+        }
+      }
+      .valueHeader {
+        padding: 15px 0;
+        .valueHead {
+          font-family: "roboto";
+          font-weight: 500;
+          font-size: 1.4rem;
+          letter-spacing: 0.5px;
+        }
+        .valueLine {
+          height: 30px;
+          @include flexCenter;
+          .coreLine {
+            display: inline-flex;
+            width: 98%;
+            height: 1px;
+            position: relative;
+            clip-path: inset(0 round 0px 0);
+
+            &::before {
+              content: "";
+              position: absolute;
+              left: -10px;
+              top: 0;
+              right: 0px;
+              bottom: 0px;
+              border: 4px dashed #c3c3c3;
+              border-radius: 30px 0;
+              box-sizing: border-box;
+            }
+          }
+        }
+
+        .valuePara {
+          font-size: 1.1rem;
+          font-family: "roboto";
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .coreValues {
+    .coreLists {
+      .ourValues {
+        flex: 0 45%;
+        padding: 20px 0;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .coreValues {
+    .coreHeader {
+      .coreHead {
+        font-size: 2rem;
+      }
+      .corePara {
+        font-size: 1rem;
+      }
+    }
+    .coreLists {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+
+      .ourValues {
+        flex: 0 1 48%;
+        padding: 0;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .coreValues {
+    .coreHeader {
+      .coreHead {
+        font-size: 1.5rem;
+      }
+      .corePara {
+        font-size: 0.9rem;
+      }
+    }
+    .coreLists {
+      gap: 10px;
+      .ourValues {
+        flex: 0 1 95%;
+        padding: 0;
+
+        .valueHeader {
+          .valueHead {
+            font-size: 1.2rem;
+          }
+          .valueLine {
+            .coreLine {
+              &::before {
+                border: 7px dashed #c3c3c3;
+              }
+            }
+          }
+          .valuePara {
+            font-size: 1rem;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,92 @@
+@use "../mixins/mixin" as *;
+
+.reach {
+  padding: 100px 0;
+  .reachHead {
+    @include Heading;
+    padding-bottom: 20px;
+  }
+  .reach_act {
+    gap: 40px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .reach {
+    padding: 0;
+    .reachHead {
+      padding-bottom: 40px;
+    }
+    .reach_act {
+      gap: 40px 0;
+    }
+  }
+  .reachMobile {
+    width: 90%;
+    margin: 0px auto;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .reach {
+    padding: 0;
+    .reachHead {
+      padding-bottom: 40px;
+    }
+    .reach_act {
+      gap: 40px;
+    }
+  }
+  .reachMobile {
+    width: 100%;
+    margin: 0px auto;
+  }
+  .mobReach {
+    .reach_card {
+      height: 300px;
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .reach {
+    .reachHead {
+      font-size: 1.5rem;
+      line-height: 180%;
+    }
+  }
+  .reachMobile {
+    height: 240px;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .reachMobile {
+    height: 260px;
+  }
+  .mobReach {
+    .reach_card {
+      height: 330px;
+    }
+    .reachHeader {
+      font-size: 1.2rem;
+      .reachPara {
+        font-size: 0.9rem;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .reach {
+    .reachImpact {
+      display: block;
+    }
+    .reachHead {
+      line-height: 140%;
+    }
+  }
+  .reachCount {
+    font-size: 2rem;
+  }
+}

@@ -1,0 +1,341 @@
+@use "../variables/variables" as *;
+@use "../mixins/mixin" as *;
+
+.serviceBanner {
+  padding: 40px 0 50px;
+  background-color: $bannerColor;
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100px;
+    background-color: $bannerColor;
+    top: -100px;
+    z-index: 0;
+  }
+  .serviceHeader {
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    height: 100%;
+    flex-direction: column;
+    .serviceHead {
+      font-size: 3.5rem;
+      text-align: left;
+      font-weight: 700;
+      line-height: 140%;
+      padding-bottom: 15px;
+      font-family: "montserrat";
+      .service_yellow {
+        background-image: url("/assets/banner/bottom_line.svg");
+        background-repeat: no-repeat;
+        background-position: bottom;
+        background-size: 100%;
+        padding-bottom: 10px;
+      }
+    }
+    .serviceParabold {
+      text-align: left;
+      line-height: 180%;
+      font-size: 1.1rem;
+    }
+    .servicePara {
+      text-align: left;
+      line-height: 180%;
+      font-size: 1.1rem;
+      max-width: 550px;
+    }
+    .serviceButton {
+      margin-top: 40px;
+    }
+  }
+
+  .serviceImage {
+    .servicePic {
+      pointer-events: none;
+    }
+  }
+}
+
+.serviceAbout {
+  padding: 50px 0 30px;
+  .serviceBg {
+    background-color: #a0f2ff;
+    padding: 20px;
+    border-radius: 15px;
+  }
+  .serviceAboutHeader {
+    font-size: 2.5rem;
+    text-align: left;
+    font-weight: 700;
+    line-height: 140%;
+    @include flexCenter;
+    height: 100%;
+    .aboutBlock {
+      display: block;
+      .service_yellow {
+        background-image: url("/assets/banner/bottom_line.svg");
+        background-repeat: no-repeat;
+        background-position: bottom;
+        background-size: 100%;
+      }
+    }
+  }
+
+  .serviceAboutContent {
+    .serviceParabold {
+      font-size: 1.2rem;
+      line-height: 150%;
+      cursor: default;
+      font-weight: 600;
+      color: #103853;
+    }
+    .servicePara {
+      font-size: 1.2rem;
+      line-height: 150%;
+      cursor: default;
+      .more {
+        cursor: pointer;
+        color: $primaryColor;
+        position: relative;
+        font-weight: 500;
+        &:hover {
+          color: #141f26;
+          &::before {
+            background-color: #141f26;
+          }
+        }
+        &::before {
+          content: "";
+          position: absolute;
+          width: 100%;
+          height: 1.4px;
+          background-color: #141f26;
+          bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+//our Services
+.our_service {
+  padding: 100px 0 50px;
+  .ourHeader {
+    text-align: center;
+    .ourHead {
+      font-size: 2.5rem;
+      line-height: 200%;
+      font-weight: 700;
+      color: #1b4f72;
+      text-align: center;
+      font-family: montserrat;
+    }
+    .ourPara {
+      max-width: 800px;
+      margin: 0 auto;
+      font-size: 1.2rem;
+      line-height: 170%;
+      cursor: default;
+    }
+  }
+}
+
+// Mixitup Card
+
+.serviceCard {
+  .serviceHead {
+    padding: 10px 0;
+    .serviceHeader {
+      font-size: 1.2rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      min-height: 40px;
+    }
+    .serviceshort {
+      font-size: 1rem;
+      padding-bottom: 10px;
+      color: #535353;
+      letter-spacing: 0.5px;
+    }
+    .servicePara {
+      font-size: 1rem;
+      line-height: 150%;
+      color: #555;
+      .bolder {
+        color: #343434;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+.service_menu {
+  .service_button {
+    padding: 12px 20px;
+    min-width: 100px;
+    text-align: center;
+    border: 1px solid #bababa;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+    color: #555;
+    font-weight: 400;
+    min-width: 120px;
+    letter-spacing: 1px;
+    background-color: transparent;
+    display: block;
+    &:focus {
+      outline: none;
+      box-shadow: none;
+    }
+  }
+  .mixitup-control-active,
+  .all_active {
+    background-image: linear-gradient(183deg, #face00 0%, #f4a100 100%);
+    border: none;
+    outline: none;
+    color: $whiteColor;
+  }
+}
+
+.mixitScore {
+  padding: 50px 0 80px;
+}
+
+.serviceImg {
+  border-radius: 10px;
+}
+
+.last_child_class {
+  margin-right: 10px;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@media only screen and (max-width: 1250px) {
+  .serviceBanner {
+    .serviceHeader {
+      .serviceHead {
+        font-size: 2.3rem;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  .serviceBanner {
+    .serviceHeader {
+      .serviceHead {
+        font-size: 2rem;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .serviceBanner {
+    .serviceHeader {
+      align-items: center;
+      padding-bottom: 30px;
+      .serviceButton {
+        margin-top: 20px;
+      }
+      .serviceHead {
+        font-size: 2.2rem;
+        text-align: center;
+        line-height: 150%;
+      }
+      .servicePara {
+        text-align: center;
+      }
+      .serviceButton {
+        text-align: center;
+      }
+    }
+  }
+  .serviceAbout {
+    .serviceAboutHeader {
+      justify-content: left;
+      padding-bottom: 15px;
+
+      .serviceAboutHead {
+        font-size: 1.5rem;
+        line-height: 130%;
+      }
+    }
+    .serviceAboutContent {
+      .serviceName {
+        padding-bottom: 10px;
+      }
+      .servicePara {
+        font-size: 0.9rem;
+      }
+      .serviceParabold {
+        padding-bottom: 10px;
+      }
+    }
+  }
+  .serviceCard {
+    padding: 0px 0 20px;
+    .serviceHead {
+      .serviceHeader {
+        font-size: 1.1rem;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .serviceBanner {
+    padding: 20px 0 40px;
+    .serviceHeader {
+      .serviceHead {
+        font-size: 2rem;
+      }
+    }
+  }
+  .our_service {
+    .ourHeader {
+      .ourPara {
+        font-size: 0.9rem;
+      }
+    }
+  }
+  .serviceAbout {
+    padding: 80px 0 0px;
+  }
+  .serviceCard {
+    .serviceHead {
+      .servicePara {
+        font-size: 0.9rem;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .serviceBanner {
+    .serviceHeader {
+      .serviceHead {
+        font-size: 1.7rem;
+      }
+      .servicePara {
+        font-size: 0.95rem;
+      }
+      .serviceHead {
+        .service_yellow {
+          padding-bottom: 5px;
+        }
+      }
+    }
+  }
+}

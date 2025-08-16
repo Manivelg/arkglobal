@@ -1,0 +1,39 @@
+@use "../mixins/mixin" as *;
+
+.clients {
+  padding: 50px 0 10px;
+  .client_header {
+    display: grid;
+    align-items: center;
+    gap: 20px;
+    .clientHead {
+      @include Heading;
+    }
+    .client_group {
+      width: 90%;
+      margin: 0px auto;
+      .client_img {
+        width: 100%;
+        margin: 0px auto;
+        pointer-events: none;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .clients {
+    .client_header {
+      .clientHead {
+        font-size: 1.5rem;
+        line-height: 150%;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .clientblock {
+    display: block;
+  }
+}

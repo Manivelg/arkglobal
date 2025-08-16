@@ -1,0 +1,32 @@
+@use "../variables/variables" as *;
+
+// Center
+@mixin center_flex() {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  flex-direction: column;
+}
+@mixin flexCenter() {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@mixin three_line() {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// Heading
+
+@mixin Heading() {
+  font-size: 2.5rem;
+  line-height: 200%;
+  font-weight: 700;
+  color: $headColor;
+  text-align: center;
+  font-family: "montserrat";
+}

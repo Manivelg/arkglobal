@@ -1,0 +1,72 @@
+@import "tailwindcss";
+@import "primereact/resources/themes/lara-light-blue/theme.css"; /* Theme */
+@import "primereact/resources/primereact.min.css"; /* Core styles */
+@import "primeicons/primeicons.css"; /* Icons */
+@import "primereact/resources/themes/lara-light-cyan/theme.css";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@theme {
+  --breakpoint-small: 20rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Poppins, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+.p-breadcrumb,
+.p-datatable {
+  font-family: var(--font-poppins);
+}
+.p-inputtext:enabled:focus {
+  box-shadow: 0 0 0 0.2rem #dbeefb;
+  border-color: #1b4f72;
+}
+.p-column-title {
+  font-weight: 500;
+}
+.p-icon-field > .p-input-icon {
+  margin-top: -0.9rem;
+}
+.p-icon-field,
+.p-inputtext,
+.p-icon-field-right > .p-inputtext {
+  width: 100%;
+}
+.logo {
+  width: 100%;
+}
+
+@media only screen and (max-width: 600px) {
+  .container {
+    max-width: 35rem;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .container {
+    max-width: 29rem;
+  }
+}

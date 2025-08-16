@@ -1,0 +1,281 @@
+.aboutBanner {
+  background-image: url("/assets/about-us/banner/ark_banner.webp");
+  background-size: 800px;
+  background-repeat: no-repeat;
+  background-position: 100% 20%;
+
+  .bannerHead {
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    height: 700px;
+    flex-direction: column;
+    .bannerHeader {
+      font-size: 3.5rem;
+      text-align: left;
+      font-weight: 700;
+      line-height: 140%;
+      padding-bottom: 15px;
+      font-family: montserrat;
+      .banner_yellow {
+        background-image: url("/assets/banner/bottom_line.svg");
+        background-repeat: no-repeat;
+        background-position: bottom;
+        background-size: 100%;
+        padding-bottom: 10px;
+      }
+    }
+    .bannerPara {
+      text-align: left;
+      line-height: 180%;
+      font-size: 1.1rem;
+      max-width: 550px;
+    }
+  }
+}
+
+// WeAre
+
+.weAre {
+  position: relative;
+  .weBg {
+    background-image: linear-gradient(150deg, #cefaec 0%, #ceffa0 60%);
+    padding: 25px;
+    border-radius: 15px;
+    width: 95%;
+    margin: 0px auto;
+    height: 350px;
+    .weareHeader {
+      .weareHead {
+        font-size: 2.5rem;
+        text-align: left;
+        font-weight: 700;
+        line-height: 140%;
+        height: 100%;
+        display: flex;
+        align-items: start;
+        justify-content: center;
+        flex-direction: column;
+        .weareblock {
+          display: block;
+        }
+        .banner_yellow {
+          background-image: url("/assets/banner/bottom_line.svg");
+          background-repeat: no-repeat;
+          background-position: bottom;
+          background-size: 100%;
+          padding-bottom: 10px;
+        }
+      }
+    }
+
+    .wesetPara {
+      display: flex;
+      align-items: start;
+      justify-content: center;
+      height: 100%;
+      flex-direction: column;
+      position: relative;
+      .glitter {
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+      .weArePara {
+        font-size: 1.1rem;
+        line-height: 150%;
+        padding-top: 15px;
+      }
+    }
+  }
+}
+
+.mobile_about {
+  display: none;
+}
+
+@media only screen and (max-width: 1200px) {
+  .aboutBanner {
+    background-size: 650px;
+    .bannerHead {
+      height: 550px;
+      .bannerHeader {
+        font-size: 2.4rem;
+        .banner_yellow {
+          padding-bottom: 5px;
+        }
+      }
+      .bannerPara {
+        font-size: 1rem;
+        max-width: 450px;
+      }
+    }
+  }
+  .weAre {
+    .weBg {
+      .weareHeader {
+        .weareHead {
+          font-size: 2.2rem;
+        }
+      }
+      .wesetPara {
+        .weArePara {
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  .aboutBanner {
+    background-size: 500px;
+    .bannerHead {
+      height: 400px;
+      .bannerHeader {
+        font-size: 1.8rem;
+      }
+      .bannerPara {
+        font-size: 1rem;
+      }
+    }
+  }
+  .weAre {
+    .weBg {
+      width: 100%;
+      .weareHeader {
+        .weareHead {
+          font-size: 1.8rem;
+        }
+      }
+      .wesetPara {
+        .weArePara {
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .aboutBanner {
+    background-size: 550px;
+    background-position: 100% 70%;
+    height: 1050px;
+    .bannerHead {
+      height: 350px;
+      text-align: center;
+      .bannerHeader {
+        font-size: 2rem;
+        text-align: center;
+      }
+      .bannerPara {
+        font-size: 1rem;
+        max-width: 70%;
+        margin: 0px auto;
+        text-align: center;
+      }
+      .homeButton {
+        width: 100%;
+      }
+    }
+
+    .weAre {
+      top: 330px;
+      .weBg {
+        height: auto;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .aboutBanner {
+    background-size: 450px;
+    background-position: 100% 65%;
+    height: 950px;
+    .bannerHead {
+      height: 350px;
+      .bannerHeader {
+        font-size: 1.5rem;
+        line-height: 150%;
+      }
+      .bannerPara {
+        font-size: 1rem;
+        max-width: 100%;
+      }
+      .homeButton {
+        width: 100%;
+      }
+    }
+  }
+  .aboutBanner {
+    .weAre {
+      top: 130px;
+    }
+  }
+  .desktop_about {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .aboutBanner {
+    height: 770px;
+    background-position: 100% 90%;
+    background-size: 90%;
+    .bannerHead {
+      .bannerHeader {
+        font-size: 1.4rem;
+      }
+      .bannerPara {
+        font-size: 0.9rem;
+      }
+    }
+  }
+  .weAre {
+    .weBg {
+      .weareHeader {
+        .weareHead {
+          font-size: 1.3rem;
+        }
+      }
+      .wesetPara {
+        .weArePara {
+          font-size: 0.9rem;
+        }
+      }
+    }
+  }
+
+  .mobile_about {
+    display: block;
+    .weAre {
+      .weBg {
+        height: auto;
+      }
+    }
+  }
+}
+@media only screen and (max-width: 400px) {
+  .coreValues {
+    padding: 20px 0;
+  }
+  .aboutBanner {
+    height: 720px;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  .aboutBanner {
+    height: 650px;
+    .bannerHead {
+      .bannerHeader {
+        font-size: 1.2rem;
+      }
+      .bannerPara {
+        font-size: 0.9rem;
+      }
+    }
+  }
+}

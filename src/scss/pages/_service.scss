@@ -1,0 +1,100 @@
+@use "../variables/variables" as *;
+@use "../mixins/mixin" as *;
+
+.serviceList {
+  gap: 40px;
+  .serviceImg {
+    width: 100%;
+  }
+  .serviceHead {
+    padding: 20px 0;
+    .serviceHeader {
+      font-size: 1.1rem;
+      font-weight: 500;
+      letter-spacing: 1px;
+      padding-bottom: 5px;
+      cursor: default;
+    }
+    .serviceYear {
+      color: $grayColor;
+      cursor: default;
+      min-height: 25px;
+      padding-bottom: 10px;
+    }
+    .servicePara {
+      font-size: 1rem;
+      @include three_line;
+    }
+  }
+}
+
+.serviceMobile {
+  .swiper {
+    min-height: 500px;
+    .serviceList {
+      .serviceHead {
+        padding: 15px 0;
+        .serviceHeader {
+          letter-spacing: 0;
+          font-size: 1rem;
+        }
+        .serviceYear {
+          font-size: 0.9rem;
+          padding: 0;
+          min-height: 45px;
+        }
+        .servicePara {
+          font-size: 0.9rem;
+        }
+      }
+    }
+  }
+  .submit_button {
+    font-size: 0.9rem;
+  }
+}
+
+.serviceMobile .swiper-pagination-bullet-active {
+  background-color: $primaryColor;
+}
+
+@media only screen and (max-width: 991px) {
+  .serviceList {
+    .serviceHead {
+      padding: 20px 0;
+    }
+  }
+  .submit_button.padd_set {
+    padding: 9px 50px 12px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .serviceMobile .swiper {
+    min-height: 760px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .serviceMobile .swiper {
+    min-height: 700px;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .serviceMobile .swiper {
+    min-height: 600px;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .serviceMobile {
+    .swiper {
+      height: 580px;
+      min-height: auto;
+    }
+  }
+  .more_service {
+    padding-top: 30px;
+  }
+}
