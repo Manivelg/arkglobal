@@ -40,7 +40,7 @@ export const AllMetadata = (
       author: "arkglobalworldwide",
       viewport:
         "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no",
-      "theme-color": "#353535",
+      "theme-color": "#1b4f72",
     },
     alternates: {
       canonical: "https://arkglobalworldwide.com/",
