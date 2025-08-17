@@ -1,3 +1,5 @@
+@use "../variables/variables" as *;
+
 .aboutBanner {
   background-image: url("/assets/about-us/banner/ark_banner.webp");
   background-size: 800px;
@@ -17,6 +19,7 @@
       line-height: 140%;
       padding-bottom: 15px;
       font-family: montserrat;
+      color: $primaryColor;
       .banner_yellow {
         background-image: url("/assets/banner/bottom_line.svg");
         background-repeat: no-repeat;

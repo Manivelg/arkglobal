@@ -137,11 +137,15 @@
 
 @media only screen and (max-width: 500px) {
   .footer_section {
+    .footer_width {
+      width: 95%;
+      margin: 0px auto;
+    }
     .footerLogo {
-      min-height: 100px;
+      min-height: 80px;
     }
     .footerOne {
-      min-height: 140px;
+      min-height: 160px;
       .footerHeader {
         .footHead {
           font-size: 1rem;

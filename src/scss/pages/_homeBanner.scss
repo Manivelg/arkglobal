@@ -27,6 +27,7 @@
       line-height: 140%;
       padding-bottom: 10px;
       font-family: "montserrat";
+      color: $primaryColor;
       .banner_yellow {
         background-image: url("/assets/banner/bottom_line.svg");
         background-repeat: no-repeat;
@@ -41,6 +42,7 @@
       margin: 0px auto;
       line-height: 180%;
       font-size: 1.1rem;
+      color: $blackColor;
     }
   }
 }
@@ -143,10 +145,13 @@
   .homeButton {
     justify-content: center;
     flex-direction: column;
+    width: 85%;
+    margin: 0px auto;
   }
   .contact_button,
   .submit_button {
-    width: 100%;
+    width: 85%;
+    margin: 0px auto;
   }
 }
 

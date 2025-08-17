@@ -5,6 +5,7 @@
   // background: linear-gradient(hsla(0, 0%, 100%, 0.02), rgba(0, 0, 0, 0.02));
   .header_list {
     font-weight: 500;
+    color: $blackColor;
     &:hover {
       color: $primaryColor;
     }

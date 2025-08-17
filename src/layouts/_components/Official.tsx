@@ -24,7 +24,7 @@ function Official() {
   };
 
   return (
-    <div className="grid grid-cols-12">
+    <div className="grid grid-cols-12 footer_width">
       <div className="lg:col-span-3 md:col-span-6 sm:col-span-6 small:col-span-12">
         <div className="footerLogo md:w-[90%] w-full mb-6">
           <Image
