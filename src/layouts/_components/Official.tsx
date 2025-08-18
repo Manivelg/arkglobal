@@ -28,9 +28,9 @@ function Official() {
       <div className="lg:col-span-3 md:col-span-6 sm:col-span-6 small:col-span-12">
         <div className="footerLogo md:w-[90%] w-full mb-6">
           <Image
-            src="/assets/logo/logo.png"
+            src="/assets/logo/logo1.png"
             alt={companyUrl}
-            className="footer_logo bg-white md:w-[90%] w-full"
+            className="footer_logo md:w-[90%] w-full"
             width={200}
             height={45}
             layout="responsive"

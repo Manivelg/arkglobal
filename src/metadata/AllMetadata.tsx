@@ -1,50 +1,63 @@
 // components/meta.ts
-
 import { Metadata } from "next";
+
+export const metadataBase = new URL("https://www.arkglobalworldwide.com");
 
 export const AllMetadata = (
   customMetadata: Partial<Metadata> = {}
 ): Metadata => {
   return {
-    title: `ARK GLOBAL PTE LTD | Marine Advisors | Malacca–Singapore Straits Pilot Services`,
+    metadataBase, // Required for proper OG image URLs
+    title: `ARK GLOBAL PTE LTD | Trusted Marine Pilots for Malacca–Singapore Straits & VLCC Transit`,
     description:
-      "ARK GLOBAL PTE LTD is a trusted marine advisory and pilot service provider specializing in Malacca–Singapore Straits transits. Established in Singapore, we offer 24/7 global support with a team of expert VLCC Masters and Marine Auditors.",
-    keywords:
-      "ARK GLOBAL, Marine Pilot Services, Malacca Singapore Straits, VLCC Transit, Marine Auditors, Navigation Assessment, STS Operations, Port Captain, Ship Lay-Up Services",
+      "ARK GLOBAL PTE LTD provides expert marine pilotage, VLCC transit advisory, and 24/7 marine audits in the Malacca–Singapore Straits. ISO-certified solutions for safe, efficient navigation.",
+    keywords: [
+      "Malacca Singapore Straits Pilotage",
+      "VLCC Marine Pilots Singapore",
+      "Ship Pilot Services Straits of Malacca",
+      "Marine Advisory for Tankers",
+      "STS Operations Experts",
+      "Port Captain Services",
+      "Ship Lay-Up Management Asia",
+      "Navigation Risk Assessment",
+    ].join(", "),
     openGraph: {
-      title: "ARK GLOBAL PTE LTD | Marine Advisors | Global Marine Services",
+      title: "ARK GLOBAL PTE LTD | Marine Pilotage & Advisory | Singapore",
       description:
-        "Trusted marine advisors and pilotage experts for the Malacca–Singapore Straits and beyond. 24/7 operations across Singapore, Malaysia, India, and more.",
-      url: `https://www.arkglobalworldwide.com`,
-      siteName: "ARK Global Group",
+        "24/7 marine pilot services for VLCCs, tankers, and cargo ships transiting the Malacca–Singapore Straits. ISO-compliant audits and risk assessments.",
+      url: "/", // Relative URL - metadataBase handles the domain
+      siteName: "ARK GLOBAL PTE LTD",
       type: "website",
+      locale: "en_SG",
       images: [
         {
-          url: `/assets/arkglobalworldwide.png`,
-          alt: "arkglobalworldwide",
-          width: 800,
-          height: 600,
+          url: "/assets/arkglobal-opengraph.jpg", // Now resolves to full URL via metadataBase
+          alt: "ARK GLOBAL Marine Pilots guiding VLCC in Malacca Straits",
+          width: 1200,
+          height: 630,
         },
       ],
     },
-    other: {
-      language: "English",
-      MobileOptimized: "320",
-      HandheldFriendly: "True",
-      copyright: "arkglobalworldwide",
-      "X-UA-Compatible": "IE=edge",
-      "mobile-web-app-capable": "yes",
-      "Content-Type": "text/html; charset=utf-8",
-      robots: "index, follow",
-      "revisit-after": "7 days",
-      author: "arkglobalworldwide",
-      viewport:
-        "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no",
-      "theme-color": "#1b4f72",
-    },
     alternates: {
-      canonical: "https://arkglobalworldwide.com/",
+      canonical: "/", // Relative URL
     },
-    ...customMetadata, // Merge custom values if provided
+    robots: {
+      index: true,
+      follow: true,
+      nocache: false,
+      googleBot: {
+        index: true,
+        follow: true,
+        noimageindex: false,
+      },
+    },
+    // REMOVED: viewport and themeColor from here (moved to viewport.ts)
+    other: {
+      "apple-mobile-web-app-capable": "yes",
+      distribution: "global",
+      "revisit-after": "7 days",
+      author: "ARK GLOBAL PTE LTD",
+    },
+    ...customMetadata,
   };
 };

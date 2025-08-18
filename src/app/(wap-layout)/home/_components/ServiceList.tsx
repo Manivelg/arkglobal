@@ -44,7 +44,7 @@ function ServiceList() {
           >
             <div className="">
               <Image
-                src={e.Image}
+                src={e.Img}
                 className="serviceImg"
                 width={100}
                 height={100}
