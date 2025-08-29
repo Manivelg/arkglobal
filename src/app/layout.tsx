@@ -42,6 +42,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <link rel="shortcut icon" href="/assets/logo/favicon.ico" />
       <body
         className={`${poppins.variable} ${geistMono.variable} ${montserrat.variable} ${roboto.variable} antialiased`}
         suppressHydrationWarning
