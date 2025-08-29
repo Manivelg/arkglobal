@@ -43,7 +43,7 @@ function MobileServiceList() {
                   </p>
                   <p className="servicePara">{e.ServicePara}</p>
                 </div>
-                <div className="">
+                <div className="service_more">
                   <Button label="View More" className="submit_button" />
                 </div>
               </div>

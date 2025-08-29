@@ -25,7 +25,7 @@ function About() {
                   className="bg-white py-6 px-4 transition duration-300 aboutusHead"
                 >
                   <div className="bg-white">
-                    <div className="flex justify-center">
+                    <div className="flex justify-center mb-2">
                       <Image
                         src={item.Image}
                         alt={item.contentHeader}
