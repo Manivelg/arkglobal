@@ -20,7 +20,9 @@ export const AllMetadata = (
       "Port Captain Services",
       "Ship Lay-Up Management Asia",
       "Navigation Risk Assessment",
+      "Ark Global Worldwide",
     ].join(", "),
+    authors: [{ name: "Ark Global Worldwide" }],
     openGraph: {
       title: "ARK GLOBAL PTE LTD | Marine Pilotage & Advisory | Singapore",
       description:
@@ -50,6 +52,14 @@ export const AllMetadata = (
         follow: true,
         noimageindex: false,
       },
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Ark Global Worldwide",
+      description:
+        "24/7 marine pilot services for VLCCs, tankers, and cargo ships transiting the Malacca–Singapore Straits. ISO-compliant audits and risk assessments.",
+      images: ["https://www.arkglobalworldwide.com/og-image.jpg"],
+      creator: "@arkglobal",
     },
     // REMOVED: viewport and themeColor from here (moved to viewport.ts)
     other: {
