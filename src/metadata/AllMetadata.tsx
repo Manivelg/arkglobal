@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 
-export const metadataBase = new URL("https://www.arkglobalworldwide.com");
+export const metadataBase = new URL("https://arkglobalworldwide.com");
 
 export const AllMetadata = (
   customMetadata: Partial<Metadata> = {}
