@@ -46,8 +46,8 @@ function ServiceList() {
               <Image
                 src={e.Img}
                 className="serviceImg"
-                width={100}
-                height={100}
+                width={500}
+                height={500}
                 alt={e.ServiceHeader}
                 title={e.ServiceHeader}
               />

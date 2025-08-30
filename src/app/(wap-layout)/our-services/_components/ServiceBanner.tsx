@@ -35,8 +35,8 @@ function ServiceBanner() {
                   src="/assets/services/service_banner.webp"
                   className="servicePic"
                   alt={companyUrl}
-                  width={300}
-                  height={300}
+                  width={1000}
+                  height={1000}
                   loading="lazy"
                 />
               </div>

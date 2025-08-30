@@ -144,10 +144,10 @@ const Mixitup = () => {
         <div ref={containerRef}>
           <div className="relative">
             {!isAtStart && (
-              <div className="pointer-events-none absolute left-0 top-0 h-[100px] sm:h-[50px] w-[5%] sm:w-[20%] bg-gradient-to-r from-white to-transparent z-10" />
+              <div className="pointer-events-none absolute left-0 top-0 lg:h-[60px] w-[50px] h-[50px] sm:h-[50px] md:w-[50px] sm:w-[20%] bg-gradient-to-r from-white to-transparent z-10" />
             )}
             {!isAtEnd && (
-              <div className="pointer-events-none absolute right-0 top-0 h-[100px] sm:h-[50px] w-[5%] sm:w-[20%] bg-gradient-to-l from-white to-transparent z-10" />
+              <div className="pointer-events-none absolute right-0 top-0 lg:h-[60px] w-[50px] h-[50px] sm:h-[50px] md:w-[50px] sm:w-[20%] bg-gradient-to-l from-white to-transparent z-10" />
             )}
 
             <div
@@ -200,8 +200,8 @@ const Mixitup = () => {
                   <Image
                     src={e.Image}
                     className="serviceImg"
-                    width={100}
-                    height={100}
+                    width={500}
+                    height={500}
                     alt={e.ServiceHeader}
                     title={e.ServiceHeader}
                   />

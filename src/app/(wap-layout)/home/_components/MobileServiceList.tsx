@@ -6,9 +6,16 @@ import "swiper/css/pagination";
 import Image from "next/image";
 import { ServiceLists } from "../_actions/services";
 import { Button } from "primereact/button";
+import { useRouter } from "next/navigation";
 
 function MobileServiceList() {
   const ServiceData = ServiceLists[0].data;
+  const router = useRouter();
+
+  const showServices = () => {
+    router.push(`/our-services#ourService`);
+  };
+
   return (
     <>
       <div className="w-full mx-auto serviceMobile">
@@ -29,8 +36,8 @@ function MobileServiceList() {
                   <Image
                     src={e.Img}
                     className="serviceImg"
-                    width={100}
-                    height={100}
+                    width={500}
+                    height={500}
                     alt={e.ServiceHeader}
                     title={e.ServiceHeader}
                   />
@@ -43,7 +50,11 @@ function MobileServiceList() {
                   <p className="servicePara">{e.ServicePara}</p>
                 </div>
                 <div className="service_more">
-                  <Button label="View More" className="submit_button" />
+                  <Button
+                    label="View More"
+                    className="submit_button"
+                    onClick={() => showServices()}
+                  />
                 </div>
               </div>
             </SwiperSlide>
