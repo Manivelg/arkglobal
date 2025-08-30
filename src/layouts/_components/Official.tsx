@@ -33,7 +33,6 @@ function Official() {
             className="footer_logo md:w-[90%] w-full"
             width={200}
             height={45}
-            layout="responsive"
           />
         </div>
       </div>

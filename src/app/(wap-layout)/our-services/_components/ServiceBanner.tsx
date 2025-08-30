@@ -37,7 +37,6 @@ function ServiceBanner() {
                   alt={companyUrl}
                   width={300}
                   height={300}
-                  layout="responsive"
                   loading="lazy"
                 />
               </div>

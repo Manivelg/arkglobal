@@ -31,7 +31,6 @@ function MobileServiceList() {
                     className="serviceImg"
                     width={100}
                     height={100}
-                    layout="responsive"
                     alt={e.ServiceHeader}
                     title={e.ServiceHeader}
                   />

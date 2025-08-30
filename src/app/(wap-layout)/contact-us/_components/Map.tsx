@@ -14,8 +14,6 @@ function Map() {
             alt={companyUrl}
             width={1000}
             height={1000}
-            layout="responsive"
-            style={{ objectFit: "cover" }}
           />
         </div>
       </section>
