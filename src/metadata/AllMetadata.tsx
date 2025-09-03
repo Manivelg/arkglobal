@@ -40,9 +40,9 @@ export const AllMetadata = (
       ],
     },
     icons: {
-      icon: "assets/logo/favicon.ico",
-      shortcut: "assets/logo/favicon.ico",
-      apple: "assets/logo/apple-touch-icon.png",
+      icon: "/assets/logo/favicon.ico",
+      shortcut: "/assets/logo/favicon.ico",
+      apple: "/assets/logo/apple-touch-icon.png",
     },
     alternates: { canonical: "/" },
     robots: { index: true, follow: true },
