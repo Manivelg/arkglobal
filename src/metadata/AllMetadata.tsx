@@ -32,7 +32,7 @@ export const AllMetadata = (
       locale: "en_SG",
       images: [
         {
-          url: "/assets/arkglobal-opengraph.jpg",
+          url: "/assets/logo/arkglobal.webp",
           alt: "ARK GLOBAL Marine Pilots guiding VLCC in Malacca Straits",
           width: 1200,
           height: 630,

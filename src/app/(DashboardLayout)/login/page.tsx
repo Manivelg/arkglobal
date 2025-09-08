@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import LoginForm from "./_components/LoginForm";
+import { supabase } from "../api/apiConfig";
 
 function page() {
   const companyUrl =
