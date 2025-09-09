@@ -51,7 +51,7 @@ export const AllMetadata = (
       title: "Ark Global Worldwide",
       description:
         "24/7 marine pilot services for VLCCs, tankers, and cargo ships transiting the Malacca–Singapore Straits. ISO-compliant audits and risk assessments.",
-      images: ["https://www.arkglobalworldwide.com/og-image.jpg"],
+      images: ["https://arkglobalworldwide.com/logo/arkglobal.webp"],
       creator: "@arkglobal",
     },
     other: {
