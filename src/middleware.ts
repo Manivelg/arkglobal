@@ -2,7 +2,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifyJwtToken } from "@/lib/jwt";
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const user = request.cookies.get("user")?.value;
   const token = request.cookies.get("token")?.value;
 
@@ -17,8 +17,11 @@ export function middleware(request: NextRequest) {
   }
 
   if (pathname === "/login") {
-    if (token && verifyJwtToken(token)) {
-      return NextResponse.redirect(new URL("/dashboard", request.url));
+    if (token) {
+      const verified = await verifyJwtToken(token);
+      if (verified) {
+        return NextResponse.redirect(new URL("/dashboard", request.url));
+      }
     }
     return NextResponse.next();
   }

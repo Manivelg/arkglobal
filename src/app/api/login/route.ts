@@ -76,73 +76,71 @@
 // }
 
 // app/api/login/route.ts
-import { supabase } from "@/app/(DashboardLayout)/api/apiConfig";
+import { supabaseServer } from "@/app/(DashboardLayout)/api/apiConfigServer";
 import { NextResponse } from "next/server";
-import jwt from "jsonwebtoken";
-
-const JWT_SECRET = process.env.JWT_SECRET || "your_secret_key";
+import { signJwtToken } from "@/lib/jwt";
 
 interface TokenPayload {
   id: string;
   username: string;
   email: string;
-}
-
-// Test Supabase connection by querying your login table
-async function testDatabaseConnection() {
-  try {
-    const { error } = await supabase.from("login").select("id").limit(1);
-    if (error) {
-      console.error("Connection test error:", error);
-      return false;
-    }
-    return true;
-  } catch (error) {
-    console.error("Unexpected connection error:", error);
-    return false;
-  }
+  [key: string]: unknown; // Add index signature to match JwtPayload
 }
 
 export async function POST(req: Request) {
   try {
-    // Check database connection
-    const isConnected = await testDatabaseConnection();
-    if (!isConnected) {
-      return NextResponse.json(
-        { success: false, message: "Database connection failed" },
-        { status: 500 }
-      );
-    }
-
     const body = await req.json();
-    const { username, password } = body;
+    const { email, password } = body;
 
-    if (!username || !password) {
+    if (!email || !password) {
       return NextResponse.json(
-        { success: false, message: "Username and password are required" },
+        { success: false, message: "Email and password are required" },
         { status: 400 }
       );
     }
 
     // Query Supabase login table
-    const { data, error } = await supabase
+    const { data, error } = await supabaseServer
       .from("login")
       .select("id, name, email, password")
-      .eq("name", username)
-      .eq("password", password) // ⚠️ plaintext check (works but not safe)
+      .eq("email", email.trim())
+      .eq("password", password.trim())
       .maybeSingle();
 
     if (error) {
       console.error("Database error:", error);
       return NextResponse.json(
-        { success: false, message: "Database query error" },
+        { 
+          success: false, 
+          message: "Database query error"
+        },
         { status: 500 }
       );
     }
 
     if (!data) {
+      // Check if user exists for better error message
+      const { data: userExists } = await supabaseServer
+        .from("login")
+        .select("id, name, email")
+        .eq("email", email.trim())
+        .maybeSingle();
+
+      if (userExists) {
+        return NextResponse.json(
+          {
+            success: false,
+            message: "Invalid password"
+          },
+          { status: 401 }
+        );
+      }
+
       return NextResponse.json(
-        { success: false, message: "Invalid username or password" },
+        { 
+          success: false, 
+          message: "Invalid username or password"
+        },
         { status: 401 }
       );
     }
@@ -154,7 +152,7 @@ export async function POST(req: Request) {
       email: data.email,
     };
 
-    const token = jwt.sign(tokenPayload, JWT_SECRET, { expiresIn: "1h" });
+    const token = await signJwtToken(tokenPayload, "1h");
 
     return NextResponse.json({
       success: true,

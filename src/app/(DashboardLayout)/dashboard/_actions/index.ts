@@ -20,24 +20,47 @@ interface ApiResponse {
 
 const getContactData = async (): Promise<ApiResponse> => {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_APP_URL}/api/dashboard`,
-      {
-        next: { tags: ["contacts"] }, // Optional: for revalidation
-      }
-    );
-
+    // Construct absolute URL for API call (required for server actions)
+    const baseUrl = 
+      process.env.NEXT_PUBLIC_APP_URL || 
+      (process.env.VERCEL_URL 
+        ? `https://${process.env.VERCEL_URL}` 
+        : "http://localhost:5604");
+    
+    const apiUrl = `${baseUrl}/api/dashboard`;
+    
+    const res = await fetch(apiUrl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      cache: "no-store",
+    });
+    console.log(res, "res");
     if (!res.ok) {
       throw new Error(`Failed to fetch data: ${res.status} ${res.statusText}`);
     }
 
-    const data: ApiResponse = await res.json();
+    const data = await res.json();
 
-    if (!data.success) {
-      throw new Error(data.error || "Unknown error occurred");
+    // Handle array response (as per your API route change)
+    if (Array.isArray(data)) {
+      return {
+        success: true,
+        data: data,
+      };
     }
 
-    return data;
+    // Handle object response with success field
+    if (data.success !== undefined) {
+      return data;
+    }
+
+    // Fallback: treat as success if data exists
+    return {
+      success: true,
+      data: data || [],
+    };
   } catch (error) {
     console.error("Error in getContactData:", error);
     return {

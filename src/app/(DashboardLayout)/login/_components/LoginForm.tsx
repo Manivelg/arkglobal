@@ -176,7 +176,6 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Toast } from "primereact/toast";
 import Cookies from "js-cookie";
-import { supabase } from "../../api/apiConfig";
 
 function LoginForm() {
   const router = useRouter();
@@ -206,26 +205,26 @@ function LoginForm() {
     validationSchema,
     onSubmit: async (values, { setSubmitting }) => {
       try {
-        const { data, error } = await supabase.auth.signInWithPassword({
-          email: values.email,
-          password: values.password,
+        const response = await fetch("/api/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: values.email,
+            password: values.password,
+          }),
         });
 
-        console.log("Supabase login response:", { data, error });
+        const data = await response.json();
 
-        if (error) {
-          if (error.message.includes("Invalid login credentials")) {
-            throw new Error("Invalid email or password");
-          } else if (error.message.includes("Email not confirmed")) {
-            throw new Error("Please verify your email address first");
-          } else {
-            throw new Error(error.message);
-          }
+        if (!response.ok || !data.success) {
+          throw new Error(data.message || "Login failed");
         }
 
-        if (data?.user) {
+        if (data.token && data.user) {
           // Save token
-          Cookies.set("token", data.session?.access_token ?? "", {
+          Cookies.set("token", data.token, {
             expires: 1,
             secure: process.env.NODE_ENV === "production",
             sameSite: "strict",
@@ -235,9 +234,7 @@ function LoginForm() {
           Cookies.set(
             "user",
             JSON.stringify({
-              username:
-                data.user.user_metadata?.username ||
-                data.user.email?.split("@")[0],
+              username: data.user.username,
               email: data.user.email,
               id: data.user.id,
             }),
@@ -250,6 +247,8 @@ function LoginForm() {
 
           showToast("success", "Login successful! Redirecting...");
           router.push("/dashboard");
+        } else {
+          throw new Error("Invalid response from server");
         }
       } catch (err: unknown) {
         const errorMessage =

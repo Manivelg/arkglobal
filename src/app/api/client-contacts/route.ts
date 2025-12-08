@@ -1,5 +1,5 @@
 import { sendEmail } from "@/app/utils/contactMail/contactmail";
-import pool from "@/lib/db";
+import { supabaseServer } from "@/app/(DashboardLayout)/api/apiConfigServer";
 import { NextResponse } from "next/server";
 
 interface Contact {
@@ -29,27 +29,36 @@ export async function POST(request: Request) {
       );
     }
 
-    // Insert into database
-    const [result] = await pool.query(
-      "INSERT INTO contacts (name, company, email, mobile, message) VALUES (?, ?, ?, ?, ?)",
-      [
-        contactData.name,
-        contactData.company,
-        contactData.email,
-        contactData.mobile || null, // Handle optional phone
-        contactData.message,
-      ]
-    );
+    // Insert into Supabase database
+    const { data, error } = await supabaseServer
+      .from("contacts")
+      .insert({
+        name: contactData.name,
+        company: contactData.company || null,
+        email: contactData.email,
+        mobile: contactData.mobile || null,
+        message: contactData.message,
+      })
+      .select()
+      .single();
 
-    // Type assertion for the result (adjust based on your MySQL library)
-    const insertResult = result as { insertId?: number };
+    if (error) {
+      console.error("Database insert error:", error);
+      return NextResponse.json<ContactResponse>(
+        {
+          success: false,
+          error: "Failed to save contact information",
+        },
+        { status: 500 }
+      );
+    }
 
     await sendEmail(contactData.email, contactData.name);
 
     return NextResponse.json<ContactResponse>(
       {
         success: true,
-        data: { ...contactData, id: insertResult.insertId },
+        data: { ...contactData, id: data.id },
         message: "Contact form submitted successfully",
       },
       { status: 201 }

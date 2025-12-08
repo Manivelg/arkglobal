@@ -1,25 +1,30 @@
-import pool from "@/lib/db";
+import { supabaseServer } from "@/app/(DashboardLayout)/api/apiConfigServer";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  let connection;
   try {
-    connection = await pool.getConnection();
-    const [rows] = await connection.query(
-      "SELECT * FROM `contacts` ORDER BY `date` DESC;"
-    );
+    const { data, error } = await supabaseServer
+      .from("contacts")
+      .select("*")
+      .order("date", { ascending: false });
+
+    if (error) {
+      console.error("Database error:", error);
+      return NextResponse.json(
+        { error: "Failed to fetch contacts" },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json({
       success: true,
-      data: rows,
+      data: data || [],
     });
   } catch (error) {
     console.error("Database error:", error);
     return NextResponse.json(
-      { error: "Failed to fetch users" },
+      { error: "Failed to fetch contacts" },
       { status: 500 }
     );
-  } finally {
-    if (connection) connection.release();
   }
 }
