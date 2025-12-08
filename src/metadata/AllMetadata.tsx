@@ -20,6 +20,8 @@ export const AllMetadata = (
       "Ship Lay-Up Management Asia",
       "Navigation Risk Assessment",
       "Ark Global Worldwide",
+      "ARK Global",
+      "arkglobal",
     ].join(", "),
     authors: [{ name: "Ark Global Worldwide" }],
     openGraph: {
