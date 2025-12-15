@@ -27,13 +27,13 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
     >
       {srcWebM && <source src={srcWebM} type="video/webm" />}
       <source src={srcMp4} type="video/mp4" />
-      <track
+      {/* <track
         src="/videos/example-captions.vt"
         kind="captions"
         srcLang="en"
         label="English"
         default
-      />
+      /> */}
     </video>
   );
 };

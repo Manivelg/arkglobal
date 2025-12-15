@@ -1,8 +1,51 @@
 import { supabase } from "@/app/(DashboardLayout)/api/apiConfig";
 import { NextResponse } from "next/server";
 
+/* =======================
+   TYPES
+======================= */
+
+interface ErrorLogEntry {
+  type: string;
+  message: string;
+  code?: string;
+  details?: unknown;
+  hint?: string;
+  stack?: string;
+  fullError?: string;
+}
+
+interface EnvironmentLog {
+  hasUrl?: boolean;
+  hasKey?: boolean;
+  urlLength?: number;
+  keyLength?: number;
+  urlPrefix?: string;
+  urlSuffix?: string;
+}
+
+interface ConnectionLog {
+  statusCode?: number;
+  statusText?: string;
+  hasData?: boolean;
+  dataLength?: number;
+  totalRecords?: number | null;
+  status?: "CONNECTED" | "FAILED";
+}
+
+interface ErrorLog {
+  timestamp: string;
+  environment: EnvironmentLog;
+  connection: ConnectionLog;
+  errors: ErrorLogEntry[];
+}
+
+/* =======================
+   GET HANDLER
+======================= */
+
 export async function GET() {
-  const errorLog: any = {
+  const errorLog: ErrorLog = {
     timestamp: new Date().toISOString(),
     environment: {},
     connection: {},
@@ -10,18 +53,21 @@ export async function GET() {
   };
 
   try {
-    // 1. Check Environment Variables
+    /* =======================
+       1. ENV CHECK
+    ======================= */
+
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_KEY;
 
     errorLog.environment = {
-      hasUrl: !!supabaseUrl,
-      hasKey: !!supabaseKey,
-      urlLength: supabaseUrl?.length || 0,
-      keyLength: supabaseKey?.length || 0,
-      urlPrefix: supabaseUrl?.substring(0, 30) || "NOT SET",
+      hasUrl: Boolean(supabaseUrl),
+      hasKey: Boolean(supabaseKey),
+      urlLength: supabaseUrl?.length ?? 0,
+      keyLength: supabaseKey?.length ?? 0,
+      urlPrefix: supabaseUrl?.substring(0, 30) ?? "NOT SET",
       urlSuffix:
-        supabaseUrl?.substring(Math.max(0, (supabaseUrl?.length || 0) - 20)) ||
+        supabaseUrl?.substring(Math.max(0, (supabaseUrl?.length ?? 0) - 20)) ??
         "NOT SET",
     };
 
@@ -35,33 +81,26 @@ export async function GET() {
         },
       });
 
-      return NextResponse.json(
-        {
-          success: false,
-          errorLog,
-        },
-        { status: 500 }
-      );
+      return NextResponse.json({ success: false, errorLog }, { status: 500 });
     }
 
-    // 2. Test Supabase Client Initialization
+    /* =======================
+       2. CLIENT CHECK
+    ======================= */
+
     if (!supabase) {
       errorLog.errors.push({
         type: "CLIENT_INITIALIZATION_FAILED",
         message: "Supabase client is not initialized",
       });
 
-      return NextResponse.json(
-        {
-          success: false,
-          errorLog,
-        },
-        { status: 500 }
-      );
+      return NextResponse.json({ success: false, errorLog }, { status: 500 });
     }
 
-    // 3. Test Database Connection - Try to query login table
-    console.log("🔄 Testing Supabase connection...");
+    /* =======================
+       3. DB QUERY TEST
+    ======================= */
+
     const { data, error, status, statusText } = await supabase
       .from("login")
       .select("id")
@@ -69,32 +108,28 @@ export async function GET() {
 
     errorLog.connection = {
       statusCode: status,
-      statusText: statusText,
-      hasData: !!data,
-      dataLength: data?.length || 0,
+      statusText,
+      hasData: Boolean(data),
+      dataLength: data?.length ?? 0,
     };
 
     if (error) {
-      console.error("❌ Supabase Connection Error:", error);
       errorLog.errors.push({
         type: "DATABASE_QUERY_ERROR",
         message: error.message,
-        code: error.code,
-        details: error.details,
-        hint: error.hint,
+        code: error.code ?? undefined,
+        details: error.details ?? undefined,
+        hint: error.hint ?? undefined,
         fullError: JSON.stringify(error, null, 2),
       });
 
-      return NextResponse.json(
-        {
-          success: false,
-          errorLog,
-        },
-        { status: 500 }
-      );
+      return NextResponse.json({ success: false, errorLog }, { status: 500 });
     }
 
-    // 4. Test Table Count
+    /* =======================
+       4. COUNT TEST
+    ======================= */
+
     const { count, error: countError } = await supabase
       .from("login")
       .select("*", { count: "exact", head: true });
@@ -103,14 +138,16 @@ export async function GET() {
       errorLog.errors.push({
         type: "COUNT_QUERY_ERROR",
         message: countError.message,
-        code: countError.code,
+        code: countError.code ?? undefined,
       });
     } else {
       errorLog.connection.totalRecords = count;
     }
 
-    // 5. Success Response
-    console.log("✅ Supabase connection successful!");
+    /* =======================
+       5. SUCCESS
+    ======================= */
+
     return NextResponse.json({
       success: true,
       message: "✅ Database connection is working!",
@@ -122,21 +159,157 @@ export async function GET() {
         },
       },
     });
-  } catch (error) {
-    console.error("❌ Unexpected Error:", error);
+  } catch (err: unknown) {
     errorLog.errors.push({
       type: "UNEXPECTED_ERROR",
-      message: error instanceof Error ? error.message : "Unknown error",
-      stack: error instanceof Error ? error.stack : undefined,
-      fullError: JSON.stringify(error, Object.getOwnPropertyNames(error), 2),
+      message: err instanceof Error ? err.message : "Unknown error",
+      stack: err instanceof Error ? err.stack : undefined,
+      fullError: JSON.stringify(err, Object.getOwnPropertyNames(err), 2),
     });
 
-    return NextResponse.json(
-      {
-        success: false,
-        errorLog,
-      },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, errorLog }, { status: 500 });
   }
 }
+
+// import { supabase } from "@/app/(DashboardLayout)/api/apiConfig";
+// import { NextResponse } from "next/server";
+
+// export async function GET() {
+//   const errorLog: any = {
+//     timestamp: new Date().toISOString(),
+//     environment: {},
+//     connection: {},
+//     errors: [],
+//   };
+
+//   try {
+//     // 1. Check Environment Variables
+//     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+//     const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_KEY;
+
+//     errorLog.environment = {
+//       hasUrl: !!supabaseUrl,
+//       hasKey: !!supabaseKey,
+//       urlLength: supabaseUrl?.length || 0,
+//       keyLength: supabaseKey?.length || 0,
+//       urlPrefix: supabaseUrl?.substring(0, 30) || "NOT SET",
+//       urlSuffix:
+//         supabaseUrl?.substring(Math.max(0, (supabaseUrl?.length || 0) - 20)) ||
+//         "NOT SET",
+//     };
+
+//     if (!supabaseUrl || !supabaseKey) {
+//       errorLog.errors.push({
+//         type: "ENVIRONMENT_VARIABLES_MISSING",
+//         message: "Missing Supabase environment variables",
+//         details: {
+//           missingUrl: !supabaseUrl,
+//           missingKey: !supabaseKey,
+//         },
+//       });
+
+//       return NextResponse.json(
+//         {
+//           success: false,
+//           errorLog,
+//         },
+//         { status: 500 }
+//       );
+//     }
+
+//     // 2. Test Supabase Client Initialization
+//     if (!supabase) {
+//       errorLog.errors.push({
+//         type: "CLIENT_INITIALIZATION_FAILED",
+//         message: "Supabase client is not initialized",
+//       });
+
+//       return NextResponse.json(
+//         {
+//           success: false,
+//           errorLog,
+//         },
+//         { status: 500 }
+//       );
+//     }
+
+//     // 3. Test Database Connection - Try to query login table
+//     console.log("🔄 Testing Supabase connection...");
+//     const { data, error, status, statusText } = await supabase
+//       .from("login")
+//       .select("id")
+//       .limit(1);
+
+//     errorLog.connection = {
+//       statusCode: status,
+//       statusText: statusText,
+//       hasData: !!data,
+//       dataLength: data?.length || 0,
+//     };
+
+//     if (error) {
+//       console.error("❌ Supabase Connection Error:", error);
+//       errorLog.errors.push({
+//         type: "DATABASE_QUERY_ERROR",
+//         message: error.message,
+//         code: error.code,
+//         details: error.details,
+//         hint: error.hint,
+//         fullError: JSON.stringify(error, null, 2),
+//       });
+
+//       return NextResponse.json(
+//         {
+//           success: false,
+//           errorLog,
+//         },
+//         { status: 500 }
+//       );
+//     }
+
+//     // 4. Test Table Count
+//     const { count, error: countError } = await supabase
+//       .from("login")
+//       .select("*", { count: "exact", head: true });
+
+//     if (countError) {
+//       errorLog.errors.push({
+//         type: "COUNT_QUERY_ERROR",
+//         message: countError.message,
+//         code: countError.code,
+//       });
+//     } else {
+//       errorLog.connection.totalRecords = count;
+//     }
+
+//     // 5. Success Response
+//     console.log("✅ Supabase connection successful!");
+//     return NextResponse.json({
+//       success: true,
+//       message: "✅ Database connection is working!",
+//       errorLog: {
+//         ...errorLog,
+//         connection: {
+//           ...errorLog.connection,
+//           status: "CONNECTED",
+//         },
+//       },
+//     });
+//   } catch (error) {
+//     console.error("❌ Unexpected Error:", error);
+//     errorLog.errors.push({
+//       type: "UNEXPECTED_ERROR",
+//       message: error instanceof Error ? error.message : "Unknown error",
+//       stack: error instanceof Error ? error.stack : undefined,
+//       fullError: JSON.stringify(error, Object.getOwnPropertyNames(error), 2),
+//     });
+
+//     return NextResponse.json(
+//       {
+//         success: false,
+//         errorLog,
+//       },
+//       { status: 500 }
+//     );
+//   }
+// }
