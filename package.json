@@ -11,7 +11,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.8.2",
     "@supabase/ssr": "^0.8.0",
-    "@supabase/supabase-js": "^2.57.0",
+    "@supabase/supabase-js": "^2.89.0",
     "@vercel/speed-insights": "^1.2.0",
     "bcryptjs": "^3.0.2",
     "date-fns": "^4.1.0",
@@ -55,5 +55,9 @@
     "tailwindcss": "^4",
     "typescript": "^5",
     "yup": "^1.6.1"
+  },
+    "overrides": {
+    "@supabase/auth-helpers-nextjs": "0.0.0",
+    "@supabase/auth-helpers-shared": "0.0.0"
   }
 }
