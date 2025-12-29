@@ -17,7 +17,7 @@ function page() {
           <div className="col-span-12 md:col-span-6 relative">
             <div className="w-full h-dvh absolute">
               <div className="flex flex-col justify-center items-center h-dvh gap-10">
-                <div className="max-w-[400px] min-w-[400px] flex flex-col gap-4 justify-center items-baseline">
+                <div className="max-w-100 min-w-100 flex flex-col gap-4 justify-center items-baseline">
                   <div className="flex justify-center w-full">
                     <Image
                       src="/assets/logo/logo.png"

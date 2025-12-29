@@ -176,6 +176,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Toast } from "primereact/toast";
 import Cookies from "js-cookie";
+import Link from "next/link";
 
 function LoginForm() {
   const router = useRouter();
@@ -267,11 +268,11 @@ function LoginForm() {
         Login
       </h1>
 
-      <form onSubmit={formik.handleSubmit} className="space-y-4">
+      <form onSubmit={formik.handleSubmit} className="">
         <div>
           <label
             htmlFor="email"
-            className="block text-sm font-medium mb-2 text-gray-700"
+            className="block text-sm font-medium text-gray-700 mb-1"
           >
             Email
           </label>
@@ -285,15 +286,17 @@ function LoginForm() {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           />
-          {formik.touched.email && formik.errors.email && (
-            <small className="text-red-500">{formik.errors.email}</small>
-          )}
+          <p className="min-h-7.5">
+            {formik.touched.email && formik.errors.email && (
+              <small className="text-red-500">{formik.errors.email}</small>
+            )}
+          </p>
         </div>
 
         <div>
           <label
             htmlFor="password"
-            className="block text-sm font-medium mb-2 text-gray-700"
+            className="block text-sm font-medium text-gray-700 mb-1"
           >
             Password
           </label>
@@ -309,9 +312,21 @@ function LoginForm() {
             feedback={false}
             placeholder="Password"
           />
-          {formik.touched.password && formik.errors.password && (
-            <small className="text-red-500">{formik.errors.password}</small>
-          )}
+          <p className="min-h-7.5">
+            {formik.touched.password && formik.errors.password && (
+              <small className="text-red-500">{formik.errors.password}</small>
+            )}
+          </p>
+        </div>
+
+        <div>
+          <Link
+            href="/forgot-password"
+            className="block text-sm font-medium text-right text-[#1b4f72] hover:text-blue-700"
+          >
+            Forgot Password?
+          </Link>
+          <p className="min-h-6"></p>
         </div>
 
         <Button

@@ -1,11 +1,17 @@
 "use client";
-import { Button } from "primereact/button";
-import { InputText } from "primereact/inputtext";
+
+// Dependencies
 import React, { useRef } from "react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { Toast } from "primereact/toast";
 import { useRouter } from "next/navigation";
+import { Button } from "primereact/button";
+import { InputText } from "primereact/inputtext";
+
+// Components
+
+// Actions
 import { forgotAction } from "../_actions/passwordforgot";
 
 function ForgotPassword() {
@@ -70,7 +76,7 @@ function ForgotPassword() {
       <>
         <div className="text-center relative mb-6">
           <h1 className="text-2xl font-bold text-center">
-            <span className="absolute left-0 top-[5px]">
+            <span className="absolute left-0 top-1.25">
               <i
                 className="pi pi-arrow-circle-left cursor-pointer text-[#188699] hover:text-[#54b5c6]"
                 style={{ fontSize: "1.5rem" }}
@@ -86,7 +92,7 @@ function ForgotPassword() {
           onSubmit={forgotPasswordFormik.handleSubmit}
           className="space-y-4"
         >
-          <div className="m-0 h-[272px]">
+          <div className="m-0 h-68">
             <div>
               <label htmlFor="email" className="block text-sm font-medium mb-2">
                 Email Address
@@ -103,7 +109,7 @@ function ForgotPassword() {
                 onBlur={forgotPasswordFormik.handleBlur}
                 autoComplete="off"
               />
-              <p className="h-[40px] flex items-center">
+              <p className="h-10 flex items-center">
                 {forgotPasswordFormik.touched.email &&
                   forgotPasswordFormik.errors.email && (
                     <small className="text-red-500">
