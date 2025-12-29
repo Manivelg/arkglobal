@@ -1,4 +1,6 @@
 "use client";
+
+// Dependencies
 import React, { useState, useMemo, useCallback, useRef } from "react";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
@@ -8,10 +10,14 @@ import "react-phone-input-2/lib/style.css";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Image from "next/image";
-import { ContactsList } from "../_actions";
-import { submitContactAction } from "../_actions/clients-contact";
 import { Toast } from "primereact/toast";
 import { useRouter } from "next/navigation";
+
+// Components
+
+// Actions
+import { ContactsList } from "../_actions";
+import { submitContactAction } from "../_actions/clients-contact";
 
 function NewContact() {
   const toast = useRef<Toast>(null);
@@ -234,7 +240,7 @@ function NewContact() {
 
                 {/* Message Field */}
                 <div className="contact_one relative">
-                  <div className="absolute right-[5px] top-[-17px] bg-white text-[0.7rem] p-2">
+                  <div className="absolute right-1.25 -top-4.25 bg-white text-[0.7rem] p-2">
                     {200 - (formik.values.message?.length || 0)}/0
                   </div>
                   <InputTextarea

@@ -56,7 +56,7 @@
     "typescript": "^5",
     "yup": "^1.6.1"
   },
-    "overrides": {
+  "overrides": {
     "@supabase/auth-helpers-nextjs": "0.0.0",
     "@supabase/auth-helpers-shared": "0.0.0"
   }

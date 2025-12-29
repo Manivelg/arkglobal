@@ -284,7 +284,7 @@ export const sendEmail = async (to: string, name: string) => {
             <td class="title" width="300">ARK Global PTE. Ltd.,</td>
             <td class="subject" width="300"
               ><a class="strong" href="#" target="_blank"
-                >www.arkgroup.com</a
+                >www.arkglobalworldwide.com</a
               ></td
             >
           </tr>
@@ -343,9 +343,9 @@ export const sendEmail = async (to: string, name: string) => {
                         >Our team is reviewing your message and will get back to
                         you within 24 hours. If you have any urgent questions,
                         feel free to reply to this email or contact us directly
-                        @ <a href="mailto:arkstraitspilot@gmail.com">arkstraitspilot@gmail.com</a>.</p>
+                        @ <a href="mailto:arkglobalmanagement@gmail.com">arkglobalmanagement@gmail.com</a>.</p>
 
-                      <p> Call : +65 9664 1872.</p>
+                      <p> Call : +65 65 9664 1872.</p>
 
                       <p>We look forward to assisting you!</p>
                     </td>

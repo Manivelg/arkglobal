@@ -1,6 +1,9 @@
-import { sendEmail } from "@/app/utils/contactMail/contactmail";
-import { supabaseServer } from "@/app/(DashboardLayout)/api/apiConfigServer";
+// Dependencies
 import { NextResponse } from "next/server";
+import { supabaseServer } from "@/app/(DashboardLayout)/api/apiConfigServer";
+
+// Components
+import { sendEmail } from "@/app/utils/contactMail/contactmail";
 
 interface Contact {
   name: string;
