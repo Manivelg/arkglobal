@@ -1,3 +1,12 @@
+// Dependencies
+import { Metadata } from "next";
+
+// Components
+import { AllMetadata } from "@/metadata/AllMetadata";
+
+// Meta data
+export const metadata: Metadata = AllMetadata();
+
 export default function Layout({
   children,
 }: Readonly<{

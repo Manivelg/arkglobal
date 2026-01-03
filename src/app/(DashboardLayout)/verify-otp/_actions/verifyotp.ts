@@ -1,4 +1,135 @@
-"use server";
+// "use client";
+
+// type VerifyOtpPayload = {
+//   username: string;
+//   code: string;
+// };
+
+// type VerifyOtpResponse = {
+//   success: boolean;
+//   message?: string;
+//   token?: string;
+//   data?: {
+//     email?: string;
+//     verified?: boolean;
+//   };
+// };
+
+// export async function verifyOtpAction(
+//   values: VerifyOtpPayload
+// ): Promise<VerifyOtpResponse> {
+//   try {
+//     const response = await fetch(
+//       `${process.env.NEXT_PUBLIC_APP_URL}/api/verify-otp`,
+//       {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify(values),
+//       }
+//     );
+
+//     // ✅ Read as text first
+//     const text = await response.text();
+
+//     // ✅ Handle empty response
+//     if (!text) {
+//       return {
+//         success: false,
+//         message: "Empty response from server",
+//       };
+//     }
+
+//     // ✅ Safe JSON parse
+//     const data = JSON.parse(text);
+
+//     if (!response.ok || !data.success) {
+//       return {
+//         success: false,
+//         message: data.message || "Invalid OTP",
+//       };
+//     }
+
+//     return {
+//       success: true,
+//       message: data.message || "OTP verified successfully",
+//       token: data.token,
+//       data: {
+//         email: data.email,
+//         verified: data.verified,
+//       },
+//     };
+//   } catch (error) {
+//     console.error("OTP verification error:", error);
+
+//     return {
+//       success: false,
+//       message:
+//         error instanceof Error ? error.message : "OTP verification failed",
+//     };
+//   }
+// }
+
+// "use client";
+
+// type VerifyOtpPayload = {
+//   username: string;
+//   code: string;
+// };
+
+// type VerifyOtpResponse = {
+//   success: boolean;
+//   message?: string;
+//   token?: string;
+//   data?: {
+//     email?: string;
+//     verified?: boolean;
+//   };
+// };
+
+// export async function verifyOtp(
+//   values: VerifyOtpPayload
+// ): Promise<VerifyOtpResponse> {
+//   try {
+//     const response = await fetch("/api/verify-otp", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify(values),
+//     });
+
+//     const data = await response.json();
+
+//     if (!response.ok) {
+//       return {
+//         success: false,
+//         message: data?.message || "OTP verification failed",
+//       };
+//     }
+
+//     return {
+//       success: true,
+//       message: data.message || "OTP verified successfully",
+//       token: data.token,
+//       data: {
+//         email: data.email,
+//         verified: data.verified,
+//       },
+//     };
+//   } catch (error) {
+//     console.error("OTP verification error:", error);
+
+//     return {
+//       success: false,
+//       message:
+//         error instanceof Error ? error.message : "Network error occurred",
+//     };
+//   }
+// }
+
+"use client";
 
 type VerifyOtpPayload = {
   username: string;
@@ -12,62 +143,54 @@ type VerifyOtpResponse = {
   data?: {
     email?: string;
     verified?: boolean;
-    // Add other relevant properties
   };
 };
 
-export async function verifyOtpAction(
+export async function verifyOtp(
   values: VerifyOtpPayload
 ): Promise<VerifyOtpResponse> {
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_APP_URL}/api/verify-otp`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: values.username,
-          code: values.code,
-        }),
-      }
-    );
+    // 🔍 LOG REQUEST
+    console.log("➡️ verifyOtp request:", values);
+
+    const response = await fetch("/api/verify-otp", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
 
     const data = await response.json();
 
-    if (!response.ok) {
-      throw new Error(data.message || "OTP verification failed");
-    }
+    // 🔍 LOG RESPONSE
+    console.log("⬅️ verifyOtp response:", data);
+    console.log("⬅️ HTTP status:", response.status);
 
-    // Validate the response structure
-    if (!data.success) {
-      throw new Error(data.message || "Invalid OTP");
+    // ✅ IMPORTANT FIX
+    if (!response.ok || !data.success) {
+      return {
+        success: false,
+        message: data?.message || "Invalid OTP",
+      };
     }
 
     return {
       success: true,
-      token: data.token, // If your API returns a token
+      message: data.message || "OTP verified successfully",
+      token: data.token,
       data: {
         email: data.email,
         verified: data.verified,
-        // Include other relevant data from the response
       },
-      message: data.message || "OTP verified successfully",
     };
   } catch (error) {
-    console.error("OTP verification error:", error);
-    let errorMessage = "An error occurred during OTP verification";
-    if (error instanceof Error) {
-      errorMessage = error.message;
-    } else if (typeof error === "string") {
-      errorMessage = error;
-    } else if (error && typeof error === "object" && "message" in error) {
-      errorMessage = String(error.message);
-    }
+    console.error("❌ OTP verification error:", error);
+
     return {
       success: false,
-      message: errorMessage || "An error occurred during OTP verification",
+      message:
+        error instanceof Error ? error.message : "Network error occurred",
     };
   }
 }
