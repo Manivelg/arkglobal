@@ -75,6 +75,45 @@
 //   }
 // }
 
+// import { NextResponse } from "next/server";
+
+// export async function POST(req: Request) {
+//   try {
+//     const { username, code } = await req.json();
+
+//     if (!username || code === undefined || code === null) {
+//       return NextResponse.json(
+//         { success: false, message: "Invalid request" },
+//         { status: 400 }
+//       );
+//     }
+
+//     // ✅ Ensure OTP is string
+//     const otp = String(code);
+
+//     console.log(otp, "OTP");
+
+//     if (otp !== "123456") {
+//       return NextResponse.json(
+//         { success: false, message: "Invalid OTP" },
+//         { status: 401 }
+//       );
+//     }
+
+//     return NextResponse.json({
+//       success: true,
+//       message: "OTP verified successfully",
+//       email: username,
+//       verified: true,
+//     });
+//   } catch (err) {
+//     return NextResponse.json(
+//       { success: false, message: "Server error" },
+//       { status: 500 }
+//     );
+//   }
+// }
+
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -88,10 +127,8 @@ export async function POST(req: Request) {
       );
     }
 
-    // ✅ Ensure OTP is string
+    // Ensure OTP is string
     const otp = String(code);
-
-    console.log(otp, "OTP");
 
     if (otp !== "123456") {
       return NextResponse.json(
@@ -106,7 +143,7 @@ export async function POST(req: Request) {
       email: username,
       verified: true,
     });
-  } catch (err) {
+  } catch {
     return NextResponse.json(
       { success: false, message: "Server error" },
       { status: 500 }

@@ -10,10 +10,6 @@ import { InputOtp, InputOtpChangeEvent } from "primereact/inputotp";
 // Components
 // import { verifyOtpAction } from "../_actions/verifyotp";
 
-interface ErrorResponse {
-  message?: string;
-}
-
 function OtpSetup() {
   const searchParams = useSearchParams();
   const email = searchParams.get("email");

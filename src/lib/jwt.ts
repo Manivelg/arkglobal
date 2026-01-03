@@ -70,6 +70,42 @@
 //   }
 // };
 
+// import { SignJWT, jwtVerify } from "jose";
+
+// const JWT_SECRET = process.env.JWT_SECRET;
+
+// if (!JWT_SECRET) {
+//   throw new Error("JWT_SECRET is not defined");
+// }
+
+// const secret = new TextEncoder().encode(JWT_SECRET);
+
+// export const signJwtToken = async (
+//   payload: Record<string, unknown>,
+//   expiresIn: string = "7d"
+// ): Promise<string> => {
+//   return await new SignJWT(payload)
+//     .setProtectedHeader({ alg: "HS256" })
+//     .setIssuedAt()
+//     .setExpirationTime(expiresIn)
+//     .sign(secret);
+// };
+
+// export const verifyJwtToken = async (
+//   token: string
+// ): Promise<Record<string, unknown> | null> => {
+//   try {
+//     const { payload } = await jwtVerify(token, secret, {
+//       algorithms: ["HS256"],
+//     });
+
+//     return payload;
+//   } catch (error) {
+//     console.error("JWT verification failed");
+//     return null;
+//   }
+// };
+
 import { SignJWT, jwtVerify } from "jose";
 
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -80,6 +116,9 @@ if (!JWT_SECRET) {
 
 const secret = new TextEncoder().encode(JWT_SECRET);
 
+/**
+ * Sign JWT Token
+ */
 export const signJwtToken = async (
   payload: Record<string, unknown>,
   expiresIn: string = "7d"
@@ -91,6 +130,9 @@ export const signJwtToken = async (
     .sign(secret);
 };
 
+/**
+ * Verify JWT Token
+ */
 export const verifyJwtToken = async (
   token: string
 ): Promise<Record<string, unknown> | null> => {
@@ -100,8 +142,8 @@ export const verifyJwtToken = async (
     });
 
     return payload;
-  } catch (error) {
-    console.error("JWT verification failed");
+  } catch {
+    // Token invalid / expired
     return null;
   }
 };

@@ -70,11 +70,91 @@
 //   }
 // }
 
+// "use server";
+
+// type VerifyOtpPayload = {
+//   username: string;
+//   code: string;
+// };
+
+// type VerifyOtpResponse = {
+//   success: boolean;
+//   message?: string;
+//   token?: string;
+//   data?: {
+//     email?: string;
+//     verified?: boolean;
+//   };
+// };
+
+// export async function verifyOtpAction(
+//   values: VerifyOtpPayload
+// ): Promise<VerifyOtpResponse> {
+//   try {
+//     const response = await fetch(
+//       `${process.env.NEXT_PUBLIC_APP_URL}/api/verify-otp`,
+//       {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify(values),
+//         cache: "no-store",
+//       }
+//     );
+
+//     // ✅ READ TEXT FIRST (IMPORTANT)
+//     const text = await response.text();
+
+//     let data: any;
+//     try {
+//       data = JSON.parse(text);
+//     } catch {
+//       console.error("Invalid JSON from API:", text);
+//       return {
+//         success: false,
+//         message: "Server returned invalid response",
+//       };
+//     }
+
+//     if (!response.ok || !data.success) {
+//       return {
+//         success: false,
+//         message: data.message || "OTP verification failed",
+//       };
+//     }
+
+//     return {
+//       success: true,
+//       token: data.token,
+//       data: {
+//         email: data.email,
+//         verified: data.verified ?? true,
+//       },
+//       message: data.message || "OTP verified successfully",
+//     };
+//   } catch (error) {
+//     console.error("verifyOtpAction error:", error);
+//     return {
+//       success: false,
+//       message: "Server error. Please try again.",
+//     };
+//   }
+// }
+
 "use server";
 
 type VerifyOtpPayload = {
   username: string;
   code: string;
+};
+
+type VerifyOtpApiResponse = {
+  success: boolean;
+  message?: string;
+  token?: string;
+  email?: string;
+  verified?: boolean;
 };
 
 type VerifyOtpResponse = {
@@ -103,12 +183,12 @@ export async function verifyOtpAction(
       }
     );
 
-    // ✅ READ TEXT FIRST (IMPORTANT)
+    // ✅ Read text first
     const text = await response.text();
 
-    let data: any;
+    let data: VerifyOtpApiResponse;
     try {
-      data = JSON.parse(text);
+      data = JSON.parse(text) as VerifyOtpApiResponse;
     } catch {
       console.error("Invalid JSON from API:", text);
       return {

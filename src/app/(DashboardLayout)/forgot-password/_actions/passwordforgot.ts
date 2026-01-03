@@ -102,6 +102,80 @@
 //   }
 // }
 
+// "use server";
+
+// type ForgotPayload = {
+//   email: string;
+// };
+
+// type ForgotResponse = {
+//   success: boolean;
+//   message?: string;
+// };
+
+// export async function forgotAction(
+//   values: ForgotPayload
+// ): Promise<ForgotResponse> {
+//   try {
+//     // Debug logging
+//     console.log("Forgot action triggered for email:", values.email);
+
+//     const apiUrl = process.env.NEXT_PUBLIC_APP_URL;
+
+//     if (!apiUrl) {
+//       console.error("NEXT_PUBLIC_APP_URL is not defined");
+//       return {
+//         success: false,
+//         message: "Server configuration error",
+//       };
+//     }
+
+//     const response = await fetch(`${apiUrl}/api/forgot-password`, {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({ email: values.email }),
+//       cache: "no-store",
+//     });
+
+//     // Get response text first to handle non-JSON responses
+//     const responseText = await response.text();
+//     console.log("Raw API response:", responseText);
+
+//     let responseData;
+//     try {
+//       responseData = JSON.parse(responseText);
+//     } catch (e) {
+//       console.error("Failed to parse JSON:", responseText);
+//       return {
+//         success: false,
+//         message: "Invalid server response",
+//       };
+//     }
+
+//     console.log("Parsed response data:", responseData);
+
+//     if (!response.ok) {
+//       return {
+//         success: false,
+//         message: responseData?.message || `Server error (${response.status})`,
+//       };
+//     }
+
+//     return responseData as ForgotResponse;
+//   } catch (error) {
+//     console.error("Forgot Password error:", error);
+//     return {
+//       success: false,
+//       message:
+//         error instanceof Error
+//           ? error.message
+//           : "Server error. Please try again.",
+//     };
+//   }
+// }
+
 "use server";
 
 type ForgotPayload = {
@@ -143,10 +217,10 @@ export async function forgotAction(
     const responseText = await response.text();
     console.log("Raw API response:", responseText);
 
-    let responseData;
+    let responseData: unknown;
     try {
       responseData = JSON.parse(responseText);
-    } catch (e) {
+    } catch {
       console.error("Failed to parse JSON:", responseText);
       return {
         success: false,
@@ -159,7 +233,9 @@ export async function forgotAction(
     if (!response.ok) {
       return {
         success: false,
-        message: responseData?.message || `Server error (${response.status})`,
+        message:
+          (responseData as ForgotResponse)?.message ||
+          `Server error (${response.status})`,
       };
     }
 
