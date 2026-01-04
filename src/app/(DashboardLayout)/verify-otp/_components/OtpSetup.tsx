@@ -8,7 +8,7 @@ import { useSearchParams } from "next/navigation";
 import { InputOtp, InputOtpChangeEvent } from "primereact/inputotp";
 
 // Components
-// import { verifyOtpAction } from "../_actions/verifyotp";
+import { verifyOtpAction } from "../_actions/index";
 
 function OtpSetup() {
   const searchParams = useSearchParams();
@@ -31,60 +31,6 @@ function OtpSetup() {
     }
   }, []);
 
-  // const handleVerifyOtp = async () => {
-  //   // Validate inputs
-  //   if (!email) {
-  //     setError("Email is required");
-  //     return;
-  //   }
-
-  //   if (token.length !== 6) {
-  //     setError("Token must be 6 digits");
-  //     return;
-  //   }
-
-  //   setIsLoading(true);
-  //   setError(null);
-
-  //   try {
-  //     const response = await verifyOtpAction({
-  //       username: email,
-  //       code: token,
-  //     });
-
-  //     if (!response.success) {
-  //       throw new Error(response.message || "OTP verification failed");
-  //     }
-
-  //     toast.current?.show({
-  //       severity: "success",
-  //       summary: "Success",
-  //       detail: response.message || "OTP verified successfully",
-  //       life: 3000,
-  //     });
-
-  //     router.push(`/new-password?email=${encodeURIComponent(email)}`);
-  //   } catch (error: unknown) {
-  //     let errorMessage = "OTP verification failed";
-
-  //     if (error instanceof Error) {
-  //       errorMessage = error.message;
-  //     } else if (error && typeof error === "object" && "message" in error) {
-  //       errorMessage = (error as ErrorResponse).message || errorMessage;
-  //     }
-
-  //     toast.current?.show({
-  //       severity: "error",
-  //       summary: "Error",
-  //       detail: errorMessage,
-  //       life: 3000,
-  //     });
-  //     console.error("OTP verification error:", error);
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
-
   const handleVerifyOtp = async () => {
     setSubmitted(true);
 
@@ -101,50 +47,100 @@ function OtpSetup() {
     setIsLoading(true);
     setError(null);
 
-    console.log("➡️ Sending OTP request:", {
-      username: email,
-      code: token,
-      codeType: typeof token,
-    });
-
     try {
-      const res = await fetch("/api/verify-otp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: email, code: token }),
+      const response = await verifyOtpAction({
+        username: email,
+        code: token, // ✅ always string
       });
 
-      console.log("⬅️ Response status:", res.status);
-
-      const data = await res.json();
-
-      console.log("⬅️ Response body:", data);
-
-      if (!res.ok || !data.success) {
-        throw new Error(data.message || "Invalid OTP");
+      if (!response.success) {
+        throw new Error(response.message);
       }
 
       toast.current?.show({
         severity: "success",
         summary: "Success",
-        detail: data.message || "OTP verified successfully",
+        detail: response.message,
         life: 3000,
       });
 
-      router.replace(`/new-password?email=${encodeURIComponent(email)}`);
+      router.push(`/new-password?email=${encodeURIComponent(email)}`);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Invalid OTP");
+      const message = err instanceof Error ? err.message : "Invalid OTP";
 
       toast.current?.show({
         severity: "error",
         summary: "Error",
-        detail: err instanceof Error ? err.message : "Invalid OTP",
+        detail: message,
         life: 3000,
       });
+
+      setError(message);
     } finally {
       setIsLoading(false);
     }
   };
+
+  // const handleVerifyOtp = async () => {
+  //   setSubmitted(true);
+
+  //   if (!email) {
+  //     setError("Email is required");
+  //     return;
+  //   }
+
+  //   if (token.length !== 6) {
+  //     setError("OTP must be 6 digits");
+  //     return;
+  //   }
+
+  //   setIsLoading(true);
+  //   setError(null);
+
+  //   console.log("➡️ Sending OTP request:", {
+  //     username: email,
+  //     code: token,
+  //     codeType: typeof token,
+  //   });
+
+  //   try {
+  //     const res = await fetch("/api/verify-otp", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({ username: email, code: token }),
+  //     });
+
+  //     console.log("⬅️ Response status:", res.status);
+
+  //     const data = await res.json();
+
+  //     console.log("⬅️ Response body:", data);
+
+  //     if (!res.ok || !data.success) {
+  //       throw new Error(data.message || "Invalid OTP");
+  //     }
+
+  //     toast.current?.show({
+  //       severity: "success",
+  //       summary: "Success",
+  //       detail: data.message || "OTP verified successfully",
+  //       life: 3000,
+  //     });
+
+  //     router.replace(`/new-password?email=${encodeURIComponent(email)}`);
+  //   } catch (err) {
+  //     setError(err instanceof Error ? err.message : "Invalid OTP");
+
+  //     toast.current?.show({
+  //       severity: "error",
+  //       summary: "Error",
+  //       detail: err instanceof Error ? err.message : "Invalid OTP",
+  //       life: 3000,
+  //     });
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   // const handleVerifyOtp = async () => {
 
@@ -213,22 +209,19 @@ function OtpSetup() {
   const handleOtpChange = (e: InputOtpChangeEvent) => {
     const value = e.value;
 
-    if (value === null || value === undefined) {
+    if (typeof value === "string") {
+      setToken(value);
+    } else if (typeof value === "number") {
+      // preserve leading zeros
+      setToken(value.toString().padStart(6, "0"));
+    } else {
       setToken("");
-      return;
     }
 
-    const otp = String(value).replace(/\D/g, "");
-
-    setToken(otp);
-
-    if (submitted && otp.length === 6) {
+    if (submitted) {
       setError(null);
-      setSubmitted(false);
     }
   };
-
-  console.log("Sending OTP:", token);
 
   return (
     <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">

@@ -114,26 +114,84 @@
 //   }
 // }
 
+// import { NextResponse } from "next/server";
+
+// export async function POST(req: Request) {
+//   try {
+//     const { username, code } = await req.json();
+
+//     if (!username || code === undefined || code === null) {
+//       return NextResponse.json(
+//         { success: false, message: "Invalid request" },
+//         { status: 400 }
+//       );
+//     }
+
+//     // Ensure OTP is string
+//     const otp = String(code);
+
+//     if (otp !== "123456") {
+//       return NextResponse.json(
+//         { success: false, message: "Invalid OTP" },
+//         { status: 401 }
+//       );
+//     }
+
+//     return NextResponse.json({
+//       success: true,
+//       message: "OTP verified successfully",
+//       email: username,
+//       verified: true,
+//     });
+//   } catch {
+//     return NextResponse.json(
+//       { success: false, message: "Server error" },
+//       { status: 500 }
+//     );
+//   }
+// }
+
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
     const { username, code } = await req.json();
 
-    if (!username || code === undefined || code === null) {
+    if (!username || !code) {
       return NextResponse.json(
-        { success: false, message: "Invalid request" },
+        { success: false, message: "Email and OTP are required" },
         { status: 400 }
       );
     }
 
-    // Ensure OTP is string
-    const otp = String(code);
+    // In a real application, you would:
+    // 1. Validate the OTP from your database/cache
+    // 2. Check if OTP is not expired
+    // 3. Mark OTP as used to prevent replay attacks
 
-    if (otp !== "123456") {
+    // For now, let's simulate checking with your backend
+    // const backendUrl = process.env.BACKEND_URL || "http://localhost:3001";
+
+    const response = await fetch(`/api/auth/verify-otp`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: username,
+        otp: code,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
       return NextResponse.json(
-        { success: false, message: "Invalid OTP" },
-        { status: 401 }
+        {
+          success: false,
+          message: data.message || "Invalid OTP",
+        },
+        { status: response.status }
       );
     }
 
@@ -143,9 +201,13 @@ export async function POST(req: Request) {
       email: username,
       verified: true,
     });
-  } catch {
+  } catch (error) {
+    console.error("OTP verification error:", error);
     return NextResponse.json(
-      { success: false, message: "Server error" },
+      {
+        success: false,
+        message: "Server error. Please try again.",
+      },
       { status: 500 }
     );
   }
