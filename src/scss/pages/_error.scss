@@ -4,6 +4,10 @@
   .found_head {
     display: grid;
     place-items: center;
+    height: 100vh;
+    .not_found_img {
+      width: 100%;
+    }
     .top_move {
       text-align: center;
       .not_found_header {

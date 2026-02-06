@@ -1,5 +1,5 @@
 {
-  "name": "worldwide",
+  "name": "arkworldwide",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -22,7 +22,7 @@
     "jwt-decode": "^4.0.0",
     "mixitup": "^3.3.2",
     "mysql2": "^3.14.1",
-    "next": "^15.5.7",
+    "next": "^16.1.6",
     "nodemailer": "^7.0.5",
     "primeicons": "^7.0.0",
     "react": "^19.2.3",

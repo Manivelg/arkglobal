@@ -8,13 +8,14 @@ interface NotFoundProps {
 
 const NotFound: React.FC<NotFoundProps> = ({ onBack }) => (
   <div className="found_head">
-    <Image
-      src="/error/error.webp"
-      alt="Not Found"
-      className="not_found_img"
-      width={500}
-      height={580}
-    />
+    <div className="sm:h-auto md:h-75">
+      <Image
+        src="/error/error.svg"
+        alt="Not Found"
+        className="not_found_img"
+        fill
+      />
+    </div>
     <div className="top_move">
       <p className="not_found_header">Page not found</p>
       <Button onClick={onBack} label="Back to Home" className="submit_button" />
