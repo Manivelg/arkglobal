@@ -50,37 +50,42 @@ export async function proxy(request: NextRequest) {
   const token = request.cookies.get("token")?.value;
   const { pathname } = request.nextUrl;
 
-  // Skip static files & API
-  if (
-    pathname.startsWith("/_next") ||
-    pathname.startsWith("/api") ||
-    pathname.includes(".")
-  ) {
-    return NextResponse.next();
+  const JWT_SECRET = process.env.JWT_SECRET;
+
+  if (!JWT_SECRET) {
+    console.log("❌ JWT_SECRET is missing in production");
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
   let isAuthenticated = false;
 
   if (token) {
     try {
-      const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+      const secret = new TextEncoder().encode(JWT_SECRET);
       await jwtVerify(token, secret);
       isAuthenticated = true;
-    } catch {
+      console.log("JWT Verified ✅");
+    } catch (err) {
+      console.log("JWT verification failed ❌", err);
       isAuthenticated = false;
     }
   }
 
-  // If trying to access dashboard without login
+  console.log("Path:", pathname);
+  console.log("Token exists:", !!token);
+  console.log("Authenticated:", isAuthenticated);
+
   if (pathname.startsWith("/dashboard") && !isAuthenticated) {
+    console.log("➡ Redirecting to /login", request.url);
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  // If logged in and trying to access login page
   if (pathname === "/login" && isAuthenticated) {
+    console.log("➡ Redirecting to /dashboard", request.url);
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
+  console.log("Allowing request ✅");
   return NextResponse.next();
 }
 
