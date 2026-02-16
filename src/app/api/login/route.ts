@@ -95,7 +95,7 @@ export async function POST(req: Request) {
     if (!email || !password) {
       return NextResponse.json(
         { success: false, message: "Email and password are required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -110,11 +110,11 @@ export async function POST(req: Request) {
     if (error) {
       console.error("Database error:", error);
       return NextResponse.json(
-        { 
-          success: false, 
-          message: "Database query error"
+        {
+          success: false,
+          message: "Database query error",
         },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -130,18 +130,18 @@ export async function POST(req: Request) {
         return NextResponse.json(
           {
             success: false,
-            message: "Invalid password"
+            message: "Invalid password",
           },
-          { status: 401 }
+          { status: 401 },
         );
       }
 
       return NextResponse.json(
-        { 
-          success: false, 
-          message: "Invalid username or password"
+        {
+          success: false,
+          message: "Invalid username or password",
         },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
@@ -164,7 +164,7 @@ export async function POST(req: Request) {
     console.error("Server error:", error);
     return NextResponse.json(
       { success: false, message: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
