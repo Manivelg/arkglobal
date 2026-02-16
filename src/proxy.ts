@@ -47,24 +47,23 @@ import { NextRequest, NextResponse } from "next/server";
 import { jwtVerify } from "jose";
 
 export async function proxy(request: NextRequest) {
-  const JWT_SECRET = process.env.JWT_SECRET;
-
-  if (!JWT_SECRET) {
-    return NextResponse.redirect(new URL("/login", request.url));
-  }
-
-  const secret = new TextEncoder().encode(JWT_SECRET);
   const token = request.cookies.get("token")?.value;
-
   const { pathname } = request.nextUrl;
 
-  const isLogin = pathname === "/login";
-  const isDashboard = pathname.startsWith("/dashboard");
+  // Skip static files & API
+  if (
+    pathname.startsWith("/_next") ||
+    pathname.startsWith("/api") ||
+    pathname.includes(".")
+  ) {
+    return NextResponse.next();
+  }
 
   let isAuthenticated = false;
 
   if (token) {
     try {
+      const secret = new TextEncoder().encode(process.env.JWT_SECRET);
       await jwtVerify(token, secret);
       isAuthenticated = true;
     } catch {
@@ -72,12 +71,14 @@ export async function proxy(request: NextRequest) {
     }
   }
 
-  if (isLogin && isAuthenticated) {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
+  // If trying to access dashboard without login
+  if (pathname.startsWith("/dashboard") && !isAuthenticated) {
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  if (isDashboard && !isAuthenticated) {
-    return NextResponse.redirect(new URL("/login", request.url));
+  // If logged in and trying to access login page
+  if (pathname === "/login" && isAuthenticated) {
+    return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
   return NextResponse.next();

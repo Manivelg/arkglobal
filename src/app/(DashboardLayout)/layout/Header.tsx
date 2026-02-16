@@ -34,13 +34,13 @@ function Header() {
 
   const Logout = async () => {
     await logout();
-    router.push("/login");
+    router.replace("/login");
   };
 
   return (
     <>
       <section className="px-4 sticky top-0 shadow-sm z-50 bg-white font-poppins">
-        <div className="flex justify-between h-[80px] items-center w-full">
+        <div className="flex justify-between h-20 items-center w-full">
           <div>
             <Image
               src="/assets/logo/logo.png"
@@ -84,9 +84,9 @@ function Header() {
                     <i className="pi pi-sign-out"></i>
                   </div>
                   <div className="">
-                    <form action={logout}>
-                      <button type="submit">Logout</button>
-                    </form>
+                    <p className="truncate text-sm" onClick={Logout}>
+                      <span className="">Logout</span>
+                    </p>
                   </div>
                 </div>
               </div>

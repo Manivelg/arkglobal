@@ -1,17 +1,11 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 
 export async function logout() {
-  const cookieStore = await cookies();
+  (await cookies()).delete("token");
 
-  cookieStore.delete({
-    name: "token",
-    path: "/",
-  });
-
-  redirect("/login");
+  return { success: true };
 }
 
 // app/actions.ts
