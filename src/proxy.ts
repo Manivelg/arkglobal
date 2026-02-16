@@ -1,15 +1,76 @@
+// import { NextRequest, NextResponse } from "next/server";
+// import { jwtVerify } from "jose";
+
+// export async function proxy(request: NextRequest) {
+//   const JWT_SECRET = process.env.JWT_SECRET;
+
+//   if (!JWT_SECRET) {
+//     return NextResponse.redirect(new URL("/login", request.url));
+//   }
+
+//   const secret = new TextEncoder().encode(JWT_SECRET);
+
+//   const token = request.cookies.get("token")?.value;
+//   const pathname = request.nextUrl.pathname;
+
+//   const isLogin = pathname === "/login";
+//   const isDashboard = pathname.startsWith("/dashboard");
+
+//   let isAuthenticated = false;
+
+//   if (token) {
+//     try {
+//       await jwtVerify(token, secret);
+//       isAuthenticated = true;
+//     } catch {
+//       isAuthenticated = false;
+//     }
+//   }
+
+//   if (isLogin && isAuthenticated) {
+//     return NextResponse.redirect(new URL("/dashboard", request.url));
+//   }
+
+//   if (isDashboard && !isAuthenticated) {
+//     return NextResponse.redirect(new URL("/login", request.url));
+//   }
+
+//   return NextResponse.next();
+// }
+
+// export const config = {
+//   matcher: ["/login", "/dashboard/:path*"],
+// };
+
 // src/middleware.ts
 import { NextRequest, NextResponse } from "next/server";
-import { verifyJwtToken } from "@/lib/jwt";
+import { jwtVerify } from "jose";
 
 export async function proxy(request: NextRequest) {
+  const JWT_SECRET = process.env.JWT_SECRET;
+
+  if (!JWT_SECRET) {
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+
+  const secret = new TextEncoder().encode(JWT_SECRET);
   const token = request.cookies.get("token")?.value;
-  const pathname = request.nextUrl.pathname;
+
+  const { pathname } = request.nextUrl;
 
   const isLogin = pathname === "/login";
   const isDashboard = pathname.startsWith("/dashboard");
 
-  const isAuthenticated = token ? await verifyJwtToken(token) : null;
+  let isAuthenticated = false;
+
+  if (token) {
+    try {
+      await jwtVerify(token, secret);
+      isAuthenticated = true;
+    } catch {
+      isAuthenticated = false;
+    }
+  }
 
   if (isLogin && isAuthenticated) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
@@ -25,6 +86,34 @@ export async function proxy(request: NextRequest) {
 export const config = {
   matcher: ["/login", "/dashboard/:path*"],
 };
+
+// src/middleware.ts
+// import { NextRequest, NextResponse } from "next/server";
+// import { verifyJwtToken } from "@/lib/jwt";
+
+// export async function proxy(request: NextRequest) {
+//   const token = request.cookies.get("token")?.value;
+//   const pathname = request.nextUrl.pathname;
+
+//   const isLogin = pathname === "/login";
+//   const isDashboard = pathname.startsWith("/dashboard");
+
+//   const isAuthenticated = token ? await verifyJwtToken(token) : null;
+
+//   if (isLogin && isAuthenticated) {
+//     return NextResponse.redirect(new URL("/dashboard", request.url));
+//   }
+
+//   if (isDashboard && !isAuthenticated) {
+//     return NextResponse.redirect(new URL("/login", request.url));
+//   }
+
+//   return NextResponse.next();
+// }
+
+// export const config = {
+//   matcher: ["/login", "/dashboard/:path*"],
+// };
 
 // src/proxy.ts
 // import { NextRequest, NextResponse } from "next/server";

@@ -199,26 +199,42 @@
 // };
 
 // src/lib/jwt.ts
-import { SignJWT, jwtVerify } from "jose";
+// import { SignJWT, jwtVerify } from "jose";
+
+// const secret = new TextEncoder().encode(process.env.JWT_SECRET!);
+
+// export async function signJwtToken(
+//   payload: Record<string, unknown>,
+//   expiresIn: string,
+// ) {
+//   return await new SignJWT(payload)
+//     .setProtectedHeader({ alg: "HS256" })
+//     .setIssuedAt()
+//     .setExpirationTime(expiresIn)
+//     .sign(secret);
+// }
+
+// export async function verifyJwtToken(token: string) {
+//   try {
+//     const { payload } = await jwtVerify(token, secret);
+//     return payload;
+//   } catch {
+//     return null;
+//   }
+// }
+
+// src/lib/jwt.ts
+import { SignJWT } from "jose";
 
 const secret = new TextEncoder().encode(process.env.JWT_SECRET!);
 
-export async function signJwtToken(
-  payload: Record<string, unknown>,
+export async function signJwtToken<T extends object>(
+  payload: T,
   expiresIn: string,
 ) {
-  return await new SignJWT(payload)
+  return await new SignJWT(payload as Record<string, unknown>)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
     .setExpirationTime(expiresIn)
     .sign(secret);
-}
-
-export async function verifyJwtToken(token: string) {
-  try {
-    const { payload } = await jwtVerify(token, secret);
-    return payload;
-  } catch {
-    return null;
-  }
 }
