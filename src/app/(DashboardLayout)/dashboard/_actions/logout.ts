@@ -1,17 +1,33 @@
-// app/actions.ts
 "use server";
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 export async function logout() {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
 
-  (await cookieStore).delete("token");
-  (await cookieStore).delete("user"); // optional (JWT is source of truth)
+  cookieStore.delete({
+    name: "token",
+    path: "/",
+  });
 
   redirect("/login");
 }
+
+// app/actions.ts
+// "use server";
+
+// import { cookies } from "next/headers";
+// import { redirect } from "next/navigation";
+
+// export async function logout() {
+//   const cookieStore = cookies();
+
+//   (await cookieStore).delete("token");
+//   (await cookieStore).delete("user"); // optional (JWT is source of truth)
+
+//   redirect("/login");
+// }
 
 // // app/actions.ts
 // "use server";

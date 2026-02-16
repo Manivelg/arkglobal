@@ -84,9 +84,9 @@ function Header() {
                     <i className="pi pi-sign-out"></i>
                   </div>
                   <div className="">
-                    <p className="truncate text-sm" onClick={Logout}>
-                      <span className="">Logout</span>
-                    </p>
+                    <form action={logout}>
+                      <button type="submit">Logout</button>
+                    </form>
                   </div>
                 </div>
               </div>

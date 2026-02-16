@@ -414,12 +414,13 @@ function LoginForm() {
       <Toast ref={toast} />
       <h1 className="text-2xl font-bold mb-6 text-center">Login</h1>
 
-      <form onSubmit={formik.handleSubmit}>
+      {/* <form onSubmit={formik.handleSubmit}>
         <InputText
           name="email"
           placeholder="Email"
           value={formik.values.email}
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
         />
         <p className="min-h-7.5">
           {formik.touched.email && formik.errors.email && (
@@ -433,6 +434,7 @@ function LoginForm() {
           placeholder="Password"
           value={formik.values.password}
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
           toggleMask
           feedback={false}
         />
@@ -448,6 +450,89 @@ function LoginForm() {
           label="Login"
           loading={formik.isSubmitting}
         />
+      </form> */}
+
+      <form onSubmit={formik.handleSubmit} className="">
+        <div>
+          <label
+            htmlFor="email"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Email
+          </label>
+          <InputText
+            id="email"
+            name="email"
+            type="email"
+            className="w-full p-inputtext-sm"
+            placeholder="Email address"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            autoFocus={true}
+          />
+          <p className="min-h-7.5">
+            {formik.touched.email && formik.errors.email && (
+              <small className="text-red-500">{formik.errors.email}</small>
+            )}
+          </p>
+        </div>
+
+        <div>
+          <label
+            htmlFor="password"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Password
+          </label>
+          <Password
+            id="password"
+            name="password"
+            className="w-full"
+            inputClassName="w-full p-inputtext-sm"
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            toggleMask
+            feedback={false}
+            placeholder="Password"
+          />
+          <p className="min-h-7.5">
+            {formik.touched.password && formik.errors.password && (
+              <small className="text-red-500">{formik.errors.password}</small>
+            )}
+          </p>
+        </div>
+
+        {/* <div>
+          <Link
+            href="/forgot-password"
+            className="block text-sm font-medium text-right text-[#1b4f72] hover:text-blue-700"
+          >
+            Forgot Password?
+          </Link>
+          <p className="min-h-6"></p>
+        </div> */}
+
+        <Button
+          type="submit"
+          label="Login"
+          className="w-full bg-blue-600 hover:bg-blue-700 border-blue-600"
+          disabled={formik.isSubmitting}
+          loading={formik.isSubmitting}
+        />
+
+        {/* <div className="text-center mt-4">
+          <p className="text-sm text-gray-600">
+            Don&apos;t have an account?{" "}
+            <span
+              className="text-blue-600 hover:text-blue-800 cursor-pointer font-medium"
+              onClick={() => router.push("/signup")}
+            >
+              Sign up
+            </span>
+          </p>
+        </div> */}
       </form>
     </div>
   );
