@@ -106,23 +106,72 @@
 //   }
 // };
 
+// import { SignJWT, jwtVerify } from "jose";
+
+// const JWT_SECRET = process.env.JWT_SECRET;
+
+// if (!JWT_SECRET) {
+//   throw new Error("JWT_SECRET is not defined");
+// }
+
+// const secret = new TextEncoder().encode(JWT_SECRET);
+
+// /**
+//  * Sign JWT Token
+//  */
+// export const signJwtToken = async (
+//   payload: Record<string, unknown>,
+//   expiresIn: string = "7d"
+// ): Promise<string> => {
+//   return await new SignJWT(payload)
+//     .setProtectedHeader({ alg: "HS256" })
+//     .setIssuedAt()
+//     .setExpirationTime(expiresIn)
+//     .sign(secret);
+// };
+
+// /**
+//  * Verify JWT Token
+//  */
+// export const verifyJwtToken = async (
+//   token: string
+// ): Promise<Record<string, unknown> | null> => {
+//   try {
+//     const { payload } = await jwtVerify(token, secret, {
+//       algorithms: ["HS256"],
+//     });
+
+//     return payload;
+//   } catch {
+//     // Token invalid / expired
+//     return null;
+//   }
+// };
+
 import { SignJWT, jwtVerify } from "jose";
 
-const JWT_SECRET = process.env.JWT_SECRET;
+/**
+ * Get secret safely (works in middleware)
+ */
+const getSecret = () => {
+  const JWT_SECRET = process.env.JWT_SECRET;
 
-if (!JWT_SECRET) {
-  throw new Error("JWT_SECRET is not defined");
-}
+  if (!JWT_SECRET) {
+    throw new Error("JWT_SECRET is not defined");
+  }
 
-const secret = new TextEncoder().encode(JWT_SECRET);
+  return new TextEncoder().encode(JWT_SECRET);
+};
 
 /**
  * Sign JWT Token
  */
 export const signJwtToken = async (
   payload: Record<string, unknown>,
-  expiresIn: string = "7d"
+  expiresIn: string = "7d",
 ): Promise<string> => {
+  const secret = getSecret();
+
   return await new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
@@ -134,16 +183,17 @@ export const signJwtToken = async (
  * Verify JWT Token
  */
 export const verifyJwtToken = async (
-  token: string
+  token: string,
 ): Promise<Record<string, unknown> | null> => {
   try {
+    const secret = getSecret();
+
     const { payload } = await jwtVerify(token, secret, {
       algorithms: ["HS256"],
     });
 
     return payload;
   } catch {
-    // Token invalid / expired
     return null;
   }
 };
