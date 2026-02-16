@@ -227,10 +227,16 @@
 import { SignJWT } from "jose";
 
 export async function signJwtToken(payload: any, expiresIn: string) {
-  const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+  const secretKey = process.env.JWT_SECRET;
+
+  if (!secretKey) {
+    throw new Error("JWT_SECRET is not defined in environment variables");
+  }
+
+  const secret = new TextEncoder().encode(secretKey);
 
   return await new SignJWT(payload)
-    .setProtectedHeader({ alg: "HS256" }) // 👈 IMPORTANT
+    .setProtectedHeader({ alg: "HS256" })
     .setExpirationTime(expiresIn)
     .setIssuedAt()
     .sign(secret);

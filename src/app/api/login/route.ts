@@ -169,7 +169,6 @@
 //   }
 // }
 
-// src/app/api/login/route.ts
 import { supabaseServer } from "@/app/(DashboardLayout)/api/apiConfigServer";
 import { NextResponse } from "next/server";
 import { signJwtToken } from "@/lib/jwt";
@@ -192,6 +191,15 @@ export async function POST(req: Request) {
       );
     }
 
+    // Check if JWT_SECRET is configured
+    if (!process.env.JWT_SECRET) {
+      console.error("JWT_SECRET is not configured");
+      return NextResponse.json(
+        { success: false, message: "Server configuration error" },
+        { status: 500 },
+      );
+    }
+
     const { data, error } = await supabaseServer
       .from("login")
       .select("id, name, email, password")
@@ -201,7 +209,7 @@ export async function POST(req: Request) {
 
     if (error || !data) {
       return NextResponse.json(
-        { success: false, message: "Invalid username or password" },
+        { success: false, message: "Invalid email or password" },
         { status: 401 },
       );
     }
@@ -220,7 +228,7 @@ export async function POST(req: Request) {
       message: "Login Successful",
     });
 
-    // 🔐 Secure cookie
+    // Set secure cookie
     response.cookies.set("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
@@ -230,7 +238,8 @@ export async function POST(req: Request) {
     });
 
     return response;
-  } catch {
+  } catch (error) {
+    console.error("Login error:", error);
     return NextResponse.json(
       { success: false, message: "Internal server error" },
       { status: 500 },
