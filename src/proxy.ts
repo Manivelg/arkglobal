@@ -1,4 +1,4 @@
-// src/proxy.ts
+// src/middleware.ts
 import { NextRequest, NextResponse } from "next/server";
 import { verifyJwtToken } from "@/lib/jwt";
 
@@ -25,6 +25,34 @@ export async function proxy(request: NextRequest) {
 export const config = {
   matcher: ["/login", "/dashboard/:path*"],
 };
+
+// src/proxy.ts
+// import { NextRequest, NextResponse } from "next/server";
+// import { verifyJwtToken } from "@/lib/jwt";
+
+// export async function proxy(request: NextRequest) {
+//   const token = request.cookies.get("token")?.value;
+//   const pathname = request.nextUrl.pathname;
+
+//   const isLogin = pathname === "/login";
+//   const isDashboard = pathname.startsWith("/dashboard");
+
+//   const isAuthenticated = token ? await verifyJwtToken(token) : null;
+
+//   if (isLogin && isAuthenticated) {
+//     return NextResponse.redirect(new URL("/dashboard", request.url));
+//   }
+
+//   if (isDashboard && !isAuthenticated) {
+//     return NextResponse.redirect(new URL("/login", request.url));
+//   }
+
+//   return NextResponse.next();
+// }
+
+// export const config = {
+//   matcher: ["/login", "/dashboard/:path*"],
+// };
 
 // middleware.ts
 // import { NextRequest, NextResponse } from "next/server";

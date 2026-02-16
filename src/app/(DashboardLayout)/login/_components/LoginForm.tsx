@@ -184,7 +184,7 @@ function LoginForm() {
 
   const showToast = (
     severity: "success" | "warn" | "error",
-    message: string
+    message: string,
   ) => {
     toast.current?.show({
       severity,
@@ -227,7 +227,7 @@ function LoginForm() {
           // Save token
           Cookies.set("token", data.token, {
             expires: 1,
-            secure: process.env.NODE_ENV === "production",
+            secure: process.env.NEXT_PUBLIC_APP_URL === "production",
             sameSite: "strict",
           });
 
@@ -243,7 +243,7 @@ function LoginForm() {
               expires: 1,
               secure: process.env.NODE_ENV === "production",
               sameSite: "strict",
-            }
+            },
           );
 
           showToast("success", "Login successful! Redirecting...");

@@ -148,52 +148,77 @@
 //   }
 // };
 
+// import { SignJWT, jwtVerify } from "jose";
+
+// /**
+//  * Get secret safely (works in middleware)
+//  */
+// const getSecret = () => {
+//   const JWT_SECRET = process.env.JWT_SECRET;
+
+//   if (!JWT_SECRET) {
+//     throw new Error("JWT_SECRET is not defined");
+//   }
+
+//   return new TextEncoder().encode(JWT_SECRET);
+// };
+
+// /**
+//  * Sign JWT Token
+//  */
+// export const signJwtToken = async (
+//   payload: Record<string, unknown>,
+//   expiresIn: string = "7d",
+// ): Promise<string> => {
+//   const secret = getSecret();
+
+//   return await new SignJWT(payload)
+//     .setProtectedHeader({ alg: "HS256" })
+//     .setIssuedAt()
+//     .setExpirationTime(expiresIn)
+//     .sign(secret);
+// };
+
+// /**
+//  * Verify JWT Token
+//  */
+// export const verifyJwtToken = async (
+//   token: string,
+// ): Promise<Record<string, unknown> | null> => {
+//   try {
+//     const secret = getSecret();
+
+//     const { payload } = await jwtVerify(token, secret, {
+//       algorithms: ["HS256"],
+//     });
+
+//     return payload;
+//   } catch {
+//     return null;
+//   }
+// };
+
+// src/lib/jwt.ts
 import { SignJWT, jwtVerify } from "jose";
 
-/**
- * Get secret safely (works in middleware)
- */
-const getSecret = () => {
-  const JWT_SECRET = process.env.JWT_SECRET;
+const secret = new TextEncoder().encode(process.env.JWT_SECRET!);
 
-  if (!JWT_SECRET) {
-    throw new Error("JWT_SECRET is not defined");
-  }
-
-  return new TextEncoder().encode(JWT_SECRET);
-};
-
-/**
- * Sign JWT Token
- */
-export const signJwtToken = async (
+export async function signJwtToken(
   payload: Record<string, unknown>,
-  expiresIn: string = "7d",
-): Promise<string> => {
-  const secret = getSecret();
-
+  expiresIn: string,
+) {
   return await new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
     .setExpirationTime(expiresIn)
     .sign(secret);
-};
+}
 
-/**
- * Verify JWT Token
- */
-export const verifyJwtToken = async (
-  token: string,
-): Promise<Record<string, unknown> | null> => {
+export async function verifyJwtToken(token: string) {
   try {
-    const secret = getSecret();
-
-    const { payload } = await jwtVerify(token, secret, {
-      algorithms: ["HS256"],
-    });
-
+    const { payload } = await jwtVerify(token, secret);
     return payload;
   } catch {
     return null;
   }
-};
+}
