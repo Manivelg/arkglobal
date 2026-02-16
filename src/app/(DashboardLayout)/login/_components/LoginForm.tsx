@@ -241,7 +241,7 @@ function LoginForm() {
             }),
             {
               expires: 1,
-              secure: process.env.NODE_ENV === "production",
+              secure: process.env.NEXT_PUBLIC_APP_URL === "production",
               sameSite: "strict",
             },
           );
@@ -319,7 +319,7 @@ function LoginForm() {
           </p>
         </div>
 
-        <div>
+        {/* <div>
           <Link
             href="/forgot-password"
             className="block text-sm font-medium text-right text-[#1b4f72] hover:text-blue-700"
@@ -327,7 +327,7 @@ function LoginForm() {
             Forgot Password?
           </Link>
           <p className="min-h-6"></p>
-        </div>
+        </div> */}
 
         <Button
           type="submit"
@@ -337,7 +337,7 @@ function LoginForm() {
           loading={formik.isSubmitting}
         />
 
-        <div className="text-center mt-4">
+        {/* <div className="text-center mt-4">
           <p className="text-sm text-gray-600">
             Don&apos;t have an account?{" "}
             <span
@@ -347,7 +347,7 @@ function LoginForm() {
               Sign up
             </span>
           </p>
-        </div>
+        </div> */}
       </form>
     </div>
   );
