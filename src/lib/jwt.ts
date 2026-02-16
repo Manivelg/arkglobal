@@ -226,15 +226,12 @@
 // src/lib/jwt.ts
 import { SignJWT } from "jose";
 
-const secret = new TextEncoder().encode(process.env.JWT_SECRET!);
+export async function signJwtToken(payload: any, expiresIn: string) {
+  const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 
-export async function signJwtToken<T extends object>(
-  payload: T,
-  expiresIn: string,
-) {
-  return await new SignJWT(payload as Record<string, unknown>)
-    .setProtectedHeader({ alg: "HS256" })
-    .setIssuedAt()
+  return await new SignJWT(payload)
+    .setProtectedHeader({ alg: "HS256" }) // 👈 IMPORTANT
     .setExpirationTime(expiresIn)
+    .setIssuedAt()
     .sign(secret);
 }
