@@ -47,7 +47,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { jwtVerify } from "jose";
 
 export async function proxy(request: NextRequest) {
-  const token = request.cookies.get("token")?.value;
+  const token = request.cookies.get("token")?.value || null;
   const { pathname } = request.nextUrl;
 
   const JWT_SECRET = process.env.JWT_SECRET;
@@ -76,24 +76,24 @@ export async function proxy(request: NextRequest) {
       const secret = new TextEncoder().encode(JWT_SECRET);
       await jwtVerify(token, secret);
       isAuthenticated = true;
-      console.log("✅ JWT Verified");
+      // console.log("✅ JWT Verified");
     } catch (err) {
       // Fix: Properly handle unknown error type
       const errorMessage =
         err instanceof Error ? err.message : "Unknown error occurred";
-      console.log("❌ JWT verification failed:", errorMessage);
+      // console.log("❌ JWT verification failed:", errorMessage);
       isAuthenticated = false;
     }
   } else if (!token) {
-    console.log("No token found");
+    console.warn("No token found");
   }
 
-  console.log("Path:", pathname);
-  console.log("Authenticated:", isAuthenticated);
+  // console.log("Path:", pathname);
+  // console.log("Authenticated:", isAuthenticated);
 
   // Protected routes
   if (pathname.startsWith("/dashboard") && !isAuthenticated) {
-    console.log("➡ Redirecting to /login");
+    // console.log("➡ Redirecting to /login");
     const loginUrl = new URL("/login", request.url);
     // Add return URL to redirect back after login
     loginUrl.searchParams.set("returnUrl", pathname);
@@ -102,7 +102,7 @@ export async function proxy(request: NextRequest) {
 
   // Redirect authenticated users away from login
   if (pathname === "/login" && isAuthenticated) {
-    console.log("➡ Redirecting to /dashboard");
+    // console.log("➡ Redirecting to /dashboard");
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
@@ -112,6 +112,7 @@ export async function proxy(request: NextRequest) {
 export const config = {
   matcher: ["/login", "/dashboard/:path*"],
 };
+
 // src/middleware.ts
 // import { NextRequest, NextResponse } from "next/server";
 // import { verifyJwtToken } from "@/lib/jwt";
