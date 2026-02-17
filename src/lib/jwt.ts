@@ -199,45 +199,45 @@
 // };
 
 // src/lib/jwt.ts
-// import { SignJWT, jwtVerify } from "jose";
+import { SignJWT, jwtVerify } from "jose";
 
-// const secret = new TextEncoder().encode(process.env.JWT_SECRET!);
+const secret = new TextEncoder().encode(process.env.JWT_SECRET!);
 
-// export async function signJwtToken(
-//   payload: Record<string, unknown>,
-//   expiresIn: string,
-// ) {
-//   return await new SignJWT(payload)
-//     .setProtectedHeader({ alg: "HS256" })
-//     .setIssuedAt()
-//     .setExpirationTime(expiresIn)
-//     .sign(secret);
-// }
-
-// export async function verifyJwtToken(token: string) {
-//   try {
-//     const { payload } = await jwtVerify(token, secret);
-//     return payload;
-//   } catch {
-//     return null;
-//   }
-// }
-
-// src/lib/jwt.ts
-import { SignJWT } from "jose";
-
-export async function signJwtToken(payload: any, expiresIn: string) {
-  const secretKey = process.env.JWT_SECRET;
-
-  if (!secretKey) {
-    throw new Error("JWT_SECRET is not defined in environment variables");
-  }
-
-  const secret = new TextEncoder().encode(secretKey);
-
+export async function signJwtToken(
+  payload: Record<string, unknown>,
+  expiresIn: string,
+) {
   return await new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
-    .setExpirationTime(expiresIn)
     .setIssuedAt()
+    .setExpirationTime(expiresIn)
     .sign(secret);
 }
+
+export async function verifyJwtToken(token: string) {
+  try {
+    const { payload } = await jwtVerify(token, secret);
+    return payload;
+  } catch {
+    return null;
+  }
+}
+
+// src/lib/jwt.ts
+// import { SignJWT } from "jose";
+
+// export async function signJwtToken(payload: any, expiresIn: string) {
+//   const secretKey = process.env.JWT_SECRET;
+
+//   if (!secretKey) {
+//     throw new Error("JWT_SECRET is not defined in environment variables");
+//   }
+
+//   const secret = new TextEncoder().encode(secretKey);
+
+//   return await new SignJWT(payload)
+//     .setProtectedHeader({ alg: "HS256" })
+//     .setExpirationTime(expiresIn)
+//     .setIssuedAt()
+//     .sign(secret);
+// }

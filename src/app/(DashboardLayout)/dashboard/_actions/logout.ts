@@ -1,12 +1,12 @@
-"use server";
+// "use server";
 
-import { cookies } from "next/headers";
+// import { cookies } from "next/headers";
 
-export async function logout() {
-  (await cookies()).delete("token");
+// export async function logout() {
+//   (await cookies()).delete("token");
 
-  return { success: true };
-}
+//   return { success: true };
+// }
 
 // app/actions.ts
 // "use server";
@@ -24,14 +24,14 @@ export async function logout() {
 // }
 
 // // app/actions.ts
-// "use server";
+"use server";
 
-// import { cookies } from "next/headers";
-// // import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
+// import { redirect } from "next/navigation";
 
-// export async function logout() {
-//   const removeCookies = await cookies();
-//   removeCookies.delete("user");
-//   removeCookies.delete("token");
-//   // redirect("/login");
-// }
+export async function logout() {
+  const removeCookies = await cookies();
+  removeCookies.delete("user");
+  removeCookies.delete("token");
+  // redirect("/login");
+}

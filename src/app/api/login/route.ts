@@ -76,99 +76,6 @@
 // }
 
 // app/api/login/route.ts
-// import { supabaseServer } from "@/app/(DashboardLayout)/api/apiConfigServer";
-// import { NextResponse } from "next/server";
-// import { signJwtToken } from "@/lib/jwt";
-
-// interface TokenPayload {
-//   id: string;
-//   username: string;
-//   email: string;
-//   [key: string]: unknown; // Add index signature to match JwtPayload
-// }
-
-// export async function POST(req: Request) {
-//   try {
-//     const body = await req.json();
-//     const { email, password } = body;
-
-//     if (!email || !password) {
-//       return NextResponse.json(
-//         { success: false, message: "Email and password are required" },
-//         { status: 400 },
-//       );
-//     }
-
-//     // Query Supabase login table
-//     const { data, error } = await supabaseServer
-//       .from("login")
-//       .select("id, name, email, password")
-//       .eq("email", email.trim())
-//       .eq("password", password.trim())
-//       .maybeSingle();
-
-//     if (error) {
-//       console.error("Database error:", error);
-//       return NextResponse.json(
-//         {
-//           success: false,
-//           message: "Database query error",
-//         },
-//         { status: 500 },
-//       );
-//     }
-
-//     if (!data) {
-//       // Check if user exists for better error message
-//       const { data: userExists } = await supabaseServer
-//         .from("login")
-//         .select("id, name, email")
-//         .eq("email", email.trim())
-//         .maybeSingle();
-
-//       if (userExists) {
-//         return NextResponse.json(
-//           {
-//             success: false,
-//             message: "Invalid password",
-//           },
-//           { status: 401 },
-//         );
-//       }
-
-//       return NextResponse.json(
-//         {
-//           success: false,
-//           message: "Invalid username or password",
-//         },
-//         { status: 401 },
-//       );
-//     }
-
-//     // Create JWT
-//     const tokenPayload: TokenPayload = {
-//       id: data.id.toString(),
-//       username: data.name,
-//       email: data.email,
-//     };
-
-//     const token = await signJwtToken(tokenPayload, "1h");
-
-//     return NextResponse.json({
-//       success: true,
-//       token,
-//       user: tokenPayload,
-//       message: "Login Successful",
-//     });
-//   } catch (error) {
-//     console.error("Server error:", error);
-//     return NextResponse.json(
-//       { success: false, message: "Internal server error" },
-//       { status: 500 },
-//     );
-//   }
-// }
-
 import { supabaseServer } from "@/app/(DashboardLayout)/api/apiConfigServer";
 import { NextResponse } from "next/server";
 import { signJwtToken } from "@/lib/jwt";
@@ -177,6 +84,7 @@ interface TokenPayload {
   id: string;
   username: string;
   email: string;
+  [key: string]: unknown; // Add index signature to match JwtPayload
 }
 
 export async function POST(req: Request) {
@@ -191,15 +99,7 @@ export async function POST(req: Request) {
       );
     }
 
-    // Check if JWT_SECRET is configured
-    if (!process.env.JWT_SECRET) {
-      console.error("JWT_SECRET is not configured");
-      return NextResponse.json(
-        { success: false, message: "Server configuration error" },
-        { status: 500 },
-      );
-    }
-
+    // Query Supabase login table
     const { data, error } = await supabaseServer
       .from("login")
       .select("id, name, email, password")
@@ -207,42 +107,142 @@ export async function POST(req: Request) {
       .eq("password", password.trim())
       .maybeSingle();
 
-    if (error || !data) {
+    if (error) {
+      console.error("Database error:", error);
       return NextResponse.json(
-        { success: false, message: "Invalid email or password" },
+        {
+          success: false,
+          message: "Database query error",
+        },
+        { status: 500 },
+      );
+    }
+
+    if (!data) {
+      // Check if user exists for better error message
+      const { data: userExists } = await supabaseServer
+        .from("login")
+        .select("id, name, email")
+        .eq("email", email.trim())
+        .maybeSingle();
+
+      if (userExists) {
+        return NextResponse.json(
+          {
+            success: false,
+            message: "Invalid password",
+          },
+          { status: 401 },
+        );
+      }
+
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Invalid username or password",
+        },
         { status: 401 },
       );
     }
 
+    // Create JWT
     const tokenPayload: TokenPayload = {
       id: data.id.toString(),
       username: data.name,
       email: data.email,
     };
 
-    const token = await signJwtToken(tokenPayload, "1d");
+    const token = await signJwtToken(tokenPayload, "1h");
 
-    const response = NextResponse.json({
+    return NextResponse.json({
       success: true,
+      token,
       user: tokenPayload,
       message: "Login Successful",
     });
-
-    // Set secure cookie
-    response.cookies.set("token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      path: "/",
-      maxAge: 60 * 60 * 24, // 1 day
-    });
-
-    return response;
   } catch (error) {
-    console.error("Login error:", error);
+    console.error("Server error:", error);
     return NextResponse.json(
       { success: false, message: "Internal server error" },
       { status: 500 },
     );
   }
 }
+
+// import { supabaseServer } from "@/app/(DashboardLayout)/api/apiConfigServer";
+// import { NextResponse } from "next/server";
+// import { signJwtToken } from "@/lib/jwt";
+
+// interface TokenPayload {
+//   id: string;
+//   username: string;
+//   email: string;
+// }
+
+// export async function POST(req: Request) {
+//   try {
+//     const body = await req.json();
+//     const { email, password } = body;
+
+//     if (!email || !password) {
+//       return NextResponse.json(
+//         { success: false, message: "Email and password are required" },
+//         { status: 400 },
+//       );
+//     }
+
+//     // Check if JWT_SECRET is configured
+//     if (!process.env.JWT_SECRET) {
+//       console.error("JWT_SECRET is not configured");
+//       return NextResponse.json(
+//         { success: false, message: "Server configuration error" },
+//         { status: 500 },
+//       );
+//     }
+
+//     const { data, error } = await supabaseServer
+//       .from("login")
+//       .select("id, name, email, password")
+//       .eq("email", email.trim())
+//       .eq("password", password.trim())
+//       .maybeSingle();
+
+//     if (error || !data) {
+//       return NextResponse.json(
+//         { success: false, message: "Invalid email or password" },
+//         { status: 401 },
+//       );
+//     }
+
+//     const tokenPayload: TokenPayload = {
+//       id: data.id.toString(),
+//       username: data.name,
+//       email: data.email,
+//     };
+
+//     const token = await signJwtToken(tokenPayload, "1d");
+
+//     const response = NextResponse.json({
+//       success: true,
+//       user: tokenPayload,
+//       message: "Login Successful",
+//     });
+
+//     // Set secure cookie
+//     response.cookies.set("token", token, {
+//       httpOnly: true,
+//       secure: process.env.NODE_ENV === "production",
+//       sameSite: "lax",
+//       path: "/",
+//       maxAge: 60 * 60 * 24, // 1 day
+//     });
+
+//     return response;
+//   } catch (error) {
+//     console.error("Login error:", error);
+//     return NextResponse.json(
+//       { success: false, message: "Internal server error" },
+//       { status: 500 },
+//     );
+//   }
+// }
