@@ -49,7 +49,6 @@ export const sendEmail = async (to: string, name: string) => {
         background-color: #1b4f72;
         color: #fff;
       }
-      /* Basic */
       table {
         border-collapse: collapse;
         border-spacing: 0;
