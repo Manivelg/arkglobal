@@ -176,7 +176,6 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Toast } from "primereact/toast";
 import Cookies from "js-cookie";
-import Link from "next/link";
 
 function LoginForm() {
   const router = useRouter();

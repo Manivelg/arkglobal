@@ -12,14 +12,12 @@ const poppins = Poppins({
 
 const roboto = Roboto({
   subsets: ["latin"],
-  weight: ["100", "300", "400", "500", "600", "700"],
   variable: "--font-roboto",
   display: "swap",
 });
 
 const montserrat = Montserrat({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
   variable: "--font-montserrat",
   display: "swap",
 });
