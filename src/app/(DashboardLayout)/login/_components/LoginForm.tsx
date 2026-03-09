@@ -228,6 +228,7 @@ function LoginForm() {
             expires: 1,
             secure: process.env.NODE_ENV === "production",
             sameSite: "lax",
+            path: "/",
           });
 
           // Save user info
@@ -246,7 +247,10 @@ function LoginForm() {
           );
 
           showToast("success", "Login successful! Redirecting...");
-          router.push("/dashboard");
+          setTimeout(() => {
+            router.replace("/dashboard");
+          }, 100);
+          // router.replace("/dashboard");
           // console.log(response, "response");
         } else {
           throw new Error("Invalid response from server");
