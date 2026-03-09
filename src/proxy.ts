@@ -200,6 +200,49 @@
 // };
 
 // middleware.ts
+// import { NextRequest, NextResponse } from "next/server";
+// import { verifyJwtToken } from "@/lib/jwt";
+
+// export async function proxy(request: NextRequest) {
+//   const user = request.cookies.get("user")?.value;
+//   const token = request.cookies.get("token")?.value;
+
+//   const pathname = request.nextUrl.pathname;
+
+//   console.log(user, pathname, "middleware");
+
+//   if (pathname === "/login" && user) {
+//     return NextResponse.redirect(new URL("/dashboard", request.url));
+//   }
+
+//   if (pathname.startsWith("/dashboard") && !user) {
+//     return NextResponse.redirect(new URL("/login", request.url));
+//   }
+
+//   if (pathname === "/login") {
+//     if (token) {
+//       const verified = await verifyJwtToken(token);
+//       if (verified) {
+//         return NextResponse.redirect(new URL("/dashboard", request.url));
+//       }
+//     }
+//     return NextResponse.next();
+//   }
+
+//   if (pathname === "/login" && token) {
+//     const verified = await verifyJwtToken(token);
+//     if (verified) {
+//       return NextResponse.redirect(new URL("/dashboard", request.url));
+//     }
+//   }
+
+//   return NextResponse.next();
+// }
+
+// export const config = {
+//   matcher: ["/login", "/dashboard", "/dash", "/dashboard/:path*"],
+// };
+
 import { NextRequest, NextResponse } from "next/server";
 import { verifyJwtToken } from "@/lib/jwt";
 
@@ -209,29 +252,35 @@ export async function proxy(request: NextRequest) {
 
   const pathname = request.nextUrl.pathname;
 
-  // console.log(user, pathname, "middleware");
+  console.log(user, pathname, "middleware");
 
-  if (pathname === "/login" && user) {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
-  }
-
-  if (pathname.startsWith("/dashboard") && !user) {
-    return NextResponse.redirect(new URL("/login", request.url));
-  }
-
-  if (pathname === "/login") {
+  // If logged-in user tries to access login or home
+  if (pathname === "/login" || pathname === "/") {
     if (token) {
       const verified = await verifyJwtToken(token);
+
       if (verified) {
         return NextResponse.redirect(new URL("/dashboard", request.url));
       }
     }
-    return NextResponse.next();
+  }
+
+  // Protect dashboard routes
+  if (pathname.startsWith("/dashboard")) {
+    if (!user || !token) {
+      return NextResponse.redirect(new URL("/login", request.url));
+    }
+
+    const verified = await verifyJwtToken(token);
+
+    if (!verified) {
+      return NextResponse.redirect(new URL("/login", request.url));
+    }
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/login", "/dashboard", "/dash"],
+  matcher: ["/", "/login", "/dashboard/:path*", "/dash"],
 };

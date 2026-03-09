@@ -247,7 +247,7 @@ function LoginForm() {
 
           showToast("success", "Login successful! Redirecting...");
           router.replace("/dashboard");
-          console.log(response, "response");
+          // console.log(response, "response");
         } else {
           throw new Error("Invalid response from server");
         }
