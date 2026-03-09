@@ -30,7 +30,7 @@ class ApiClient {
 
   private async request<Payload, Response>(
     method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE",
-    options: RequestOptions<Payload>
+    options: RequestOptions<Payload>,
   ): Promise<ApiResponse<Response>> {
     const { endpoint, data, params, tags, cache } = options;
     let url = `${this.baseUrl}${endpoint}`;
@@ -91,7 +91,7 @@ class ApiClient {
   async get<Response>(
     endpoint: string,
     params?: Record<string, string>,
-    options?: { tags?: string[]; cache?: RequestCache }
+    options?: { tags?: string[]; cache?: RequestCache },
   ): Promise<ApiResponse<Response>> {
     return this.request("GET", {
       endpoint,
@@ -104,7 +104,7 @@ class ApiClient {
   async post<Payload, Response>(
     endpoint: string,
     data: Payload,
-    options?: { tags?: string[] }
+    options?: { tags?: string[] },
   ): Promise<ApiResponse<Response>> {
     return this.request("POST", { endpoint, data, tags: options?.tags });
   }
@@ -112,7 +112,7 @@ class ApiClient {
   async put<Payload, Response>(
     endpoint: string,
     data: Payload,
-    options?: { tags?: string[] }
+    options?: { tags?: string[] },
   ): Promise<ApiResponse<Response>> {
     return this.request("PUT", { endpoint, data, tags: options?.tags });
   }
@@ -120,19 +120,19 @@ class ApiClient {
   async patch<Payload, Response>(
     endpoint: string,
     data: Partial<Payload>,
-    options?: { tags?: string[] }
+    options?: { tags?: string[] },
   ): Promise<ApiResponse<Response>> {
     return this.request("PATCH", { endpoint, data, tags: options?.tags });
   }
 
   async delete<Response>(
     endpoint: string,
-    options?: { tags?: string[] }
+    options?: { tags?: string[] },
   ): Promise<ApiResponse<Response>> {
     return this.request("DELETE", { endpoint, tags: options?.tags });
   }
 }
 
 // Create and export a configured instance
-const apiClient = new ApiClient(process.env.API_URL!);
+const apiClient = new ApiClient(process.env.NEXT_PUBLIC_API_URL!);
 export default apiClient;
