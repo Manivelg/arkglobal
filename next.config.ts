@@ -1,6 +1,17 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  compress: true,
+  reactStrictMode: false,
+  poweredByHeader: false,
+  productionBrowserSourceMaps: false,
+  output: "standalone",
+
+  experimental: {
+    optimizeCss: true,
+    webpackBuildWorker: true,
+    webpackMemoryOptimizations: true,
+  },
   images: {
     remotePatterns: [
       {
